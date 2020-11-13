@@ -1,14 +1,12 @@
 import sys
 import csv
-import requests
 import pandas as pd
-from PIL import Image
-from io import BytesIO
 from googleapiclient.discovery import build
 
 CHANNEL_ID_FILE = 'channelIDs.csv'
+CHANNEL_ANALYTICS_FILE = 'channelAnalytics.csv'
+CHANNEL_DESCRIPTION_FILE = 'channelDescriptions.csv'
 
-channels = []
 titles = []
 descriptions = []
 thumbnails = []
@@ -24,6 +22,7 @@ def readFromChannelCSV():
                     names=['channel_id','subcategory','category'])
     print("Loaded {0} channels of {1} topics".format(len(channels['channel_id'][1:]), 
                                                      len(set(channels['subcategory'][1:]))))
+    return channels
 
 def channelDataAnalytics(channels):
     for i in range(1, len(channels)):
@@ -71,68 +70,30 @@ def channelDataAnalytics(channels):
         if response['items'][0]['statistics']['hiddenSubscriberCount'] == False:
             subscriberCount.append(response['items'][0]['statistics']['subscriberCount'])
         else:
-            subscriberCount.append('NA')
-            
-def mostKpopularVideos(channels, k):
-    popularVideos = []
-    for i in range(1, len(channels)):
-        channelId = channels['channel_id'][i]
-        k = min(k, videoCount[i])
-        request = server.search().list(part='snippet',type='video',order='viewCount',safeSearch='strict',
-                               channelId=channelId,maxResults=k)
-        response = request.execute()
-        videos = []
-        for item in response['items']:
-            videos.append(item['id']['videoId'])
-        popularVideos.append(videos)
-    return popularVideos
-
-def channelVideosAnalytics(video_id):
-    avg_viewCount = 0
-    avg_rating = 0
-    for videoId in video_id:
-        request = server.videos().list(part='statistics',id=videoId)
-        response = request.execute()
-        # Average View Count
-        avg_viewCount += int(response['items'][0]['statistics']['viewCount'])
-        # Average Rating
-        likesCount = int(response['items'][0]['statistics']['likeCount'])
-        dislikesCount = int(response['items'][0]['statistics']['dislikeCount'])
-        if likesCount == 0 and dislikesCount == 0:
-            avg_rating += 0
-        else:
-            avg_rating += likesCount/(likesCount + dislikesCount)
-        
-    avg_viewCount /= len(video_id)
-    avg_rating /= len(video_id) 
-    return avg_viewCount, avg_rating
-
-def thumbnailsProcessor(channels, i):
-    threshold = 128
-    response = requests.get(thumbnails[i])
-    img = Image.open(BytesIO(response.content))
-    image_name = channels['channel_id'][i + 1] + '.png'
-    img.save(image_name)
-    img_grey = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
-    img_binary = cv2.threshold(img_grey, threshold, 255, cv2.THRESH_BINARY)[1]
-    image_name = channels['channel_id'][i + 1] + '_mask.png'
-    cv2.imwrite(image_name,img_binary)   
-    
+            subscriberCount.append('NA')      
     
 def main():
-    if len(sys.argv) < 3:
-        print('Valid command : python3 popularChannelsRepository.py API_KEY NUM_CHANNELS_PER_TOPIC')
+    if len(sys.argv) < 2:
+        print('Valid command : python3 channelAnalyticsRepository.py API_KEY')
     else:
         API_KEY = str(sys.argv[1])
-        k = int(sys.argv[2])
         server = build('youtube', 'v3', developerKey=API_KEY)
-        topics = readTopicIdFromCSV()
-        channel_id, channel_subcategory, channel_category = generateKMostPopularChannels(server, topics, k)
-        with open(CHANNEL_ID_FILE, mode='w') as output_file:
-            writer = csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow(['channel_id','subcategory','category'])
-            for i in range(len(channel_id)):
-                writer.writerow([channel_id[i], channel_subcategory[i], channel_category[i]])
+        channels = readFromChannelCSV()
+        channelDataAnalytics(channels)
+        
+        with open(CHANNEL_ANALYTICS_FILE, mode='w') as output_file:
+            writer = csv.writer(output_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            writer.writerow(['channel_id','title','tags','country','default_language','videoCount','viewCount',
+                             'subscriberCount','thumbnail'])
+            for i in range(len(titles)):
+                writer.writerow([channels['channel_id'][i + 1], titles[i], tags[i], countries[i],
+                                 defaultLanguages[i],videoCount[i],viewCount[i],subscriberCount[i],thumbnails[i]])
+                
+        with open(CHANNEL_DESCRIPTION_FILE, mode='w') as output_file:
+            writer = csv.writer(output_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            writer.writerow(['channel_id','description'])
+            for i in range(len(titles)):
+                writer.writerow([channels['channel_id'][i + 1], descriptions[i]])
 
 if __name__ == "__main__":
     main()
