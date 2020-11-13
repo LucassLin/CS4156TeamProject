@@ -1,35 +1,45 @@
 package resources;
 
-import api.Saying;
 import com.codahale.metrics.annotation.Timed;
+import models.InfluencerProfile;
+import models.UserProfile;
+import views.LoginView;
+import views.UserHomeView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import java.awt.*;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.ws.rs.PathParam;
+import java.util.ArrayList;
 
-@Path("/hello-world")
-@Produces(MediaType.APPLICATION_JSON)
+@Path("")
 public class InfluencerBoardResource {
-    private final String template;
-    private final String defaultName;
-    private final AtomicLong counter;
 
-    public InfluencerBoardResource(String template, String name) {
-        this.template = template;
-        this.defaultName = name;
-        this.counter = new AtomicLong();
-    }
-
-    @GET
+    @Path("/login")
     @Timed
-    public Saying sayHello(@QueryParam("name") Optional<String> name){
-        final String value = String.format(template, name.orElse(defaultName));
-        return new Saying(counter.incrementAndGet(), value);
+    @GET
+    public LoginView getWelcome(){
+        return new LoginView("Welcome to InfluencerBoard");
     }
+
+    @Path("/home/{name}/{email}")
+    @Timed
+    @GET
+    public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email){
+        ArrayList<InfluencerProfile> influencers = new ArrayList<>();
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("music");
+        interests.add("movie");
+        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
+        return new UserHomeView(user, influencers);
+    }
+
+/*    @Path("/influencer_profile/{influencer_id}")
+    @Timed
+    @GET
+    public InfluencerProfile getInfluencer(@PathParam("influencer_id") String influencerId){
+        InfluencerProfile = getInfluencerById(influencerId);
+        return InfluencerHomeView(InfluencerProfile);
+    }*/
 
 }
+
