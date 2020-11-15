@@ -6,11 +6,14 @@ import models.UserProfile;
 import tasks.GetChannelAnalyticsTask;
 import views.LoginView;
 import views.UserHomeView;
+import views.InfluencerProfileView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 @Path("")
 public class InfluencerBoardResource {
@@ -35,13 +38,16 @@ public class InfluencerBoardResource {
         return new UserHomeView(user, influencers);
     }
 
-/*    @Path("/influencer_profile/{influencer_id}")
-    @Timed
+    @Path("/home/{userId}/{name}/{email}/{channelId}")
+    @Produces("text/html;charset=UTF-8")
     @GET
-    public InfluencerProfile getInfluencer(@PathParam("influencer_id") String influencerId){
-        InfluencerProfile = getInfluencerById(influencerId);
-        return InfluencerHomeView(InfluencerProfile);
-    }*/
+    public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") Integer channelId){
+        Map<String, Integer> cntMap = new HashMap<String, Integer>();
+        InfluencerProfile influencer = new InfluencerProfile(
+                channelId, "", "", "0000000000", "female",
+                19, 1111, cntMap, "", "", 10);
+        return new InfluencerProfileView(influencer);
+    }
 
 }
 
