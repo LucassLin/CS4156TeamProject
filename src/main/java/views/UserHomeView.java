@@ -5,7 +5,6 @@ import models.InfluencerProfile;
 import models.UserProfile;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserHomeView extends View {
 

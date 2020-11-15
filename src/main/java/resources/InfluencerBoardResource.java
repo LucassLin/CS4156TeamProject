@@ -3,6 +3,7 @@ package resources;
 import com.codahale.metrics.annotation.Timed;
 import models.InfluencerProfile;
 import models.UserProfile;
+import tasks.GetChannelAnalyticsTask;
 import views.LoginView;
 import views.UserHomeView;
 
@@ -25,7 +26,8 @@ public class InfluencerBoardResource {
     @Timed
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email){
-        ArrayList<InfluencerProfile> influencers = new ArrayList<>();
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
         interests.add("movie");

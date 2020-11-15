@@ -1,38 +1,40 @@
 package models;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class InfluencerProfile {
 
-    private int channelId;
+    private String channelId;
+    private String channelName;
     private String type;
     private String countryCode;
-    private String ageGroup;
-    private String gender;
-    private int numOfSubscribers;
-    private int averagePostViews;
-    private Map<String, Integer> tagFreq;
-    private String channelLink;
+    private String numOfSubscribers;
+    private String averagePostViews;
+    private ArrayList<String> tags;
+    //private Map<String, Integer> tagFreq;
+    //private String channelLink;
     private String photoLink;
-    private double rating;
+    //private double rating;
 
-    public InfluencerProfile(int channelId, String type, String countryCode, String ageGroup, String gender,
-                             int numOfSubscribers, int averagePostViews, Map<String, Integer> tagFreq, String channelLink,
-                             String photoLink, double rating) {
+    public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
+                             String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
+                             String photoLink) {
         this.channelId = channelId;
+        this.channelName = channelName;
         this.type = type;
         this.countryCode = countryCode;
-        this.ageGroup = ageGroup;
-        this.gender = gender;
         this.numOfSubscribers = numOfSubscribers;
         this.averagePostViews = averagePostViews;
-        this.tagFreq = tagFreq;
-        this.channelLink = channelLink;
+        //this.tagFreq = tagFreq;
+        //this.channelLink = channelLink;
         this.photoLink = photoLink;
-        this.rating = rating;
+        //this.rating = rating;
+        this.tags = tags;
     }
 
-    public int getChannelId() {
+    public String getChannelId() {
         return channelId;
     }
 
@@ -44,35 +46,23 @@ public class InfluencerProfile {
         return countryCode;
     }
 
-    public String getAgeGroup() {
-        return ageGroup;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public int getNumOfSubscribers() {
+    public String getNumOfSubscribers() {
         return numOfSubscribers;
     }
 
-    public int getAveragePostViews() {
+    public String getAveragePostViews() {
         return averagePostViews;
-    }
-
-    public Map<String, Integer> getTagFreq() {
-        return tagFreq;
-    }
-
-    public String getChannelLink() {
-        return channelLink;
     }
 
     public String getPhotoLink() {
         return photoLink;
     }
 
-    public double getRating() {
-        return rating;
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public String getChannelName() {
+        return channelName;
     }
 }

@@ -12,12 +12,11 @@
     <script>
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
-            var id_token = googleUser.getAuthResponse().id_token;
             var params = profile.getName() + "/" + profile.getEmail();
             location.href = "/home/" + params;
         }
     </script>
-<#--    <a href="#" onclick="signOut();">Sign out</a>
+    <a href="#" onclick="signOut();">Sign out</a>
     <script>
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
@@ -25,6 +24,6 @@
                 console.log('User signed out.');
             });
         }
-    </script>-->
+    </script>
 </body>
 </html>
