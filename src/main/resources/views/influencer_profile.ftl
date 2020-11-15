@@ -15,25 +15,13 @@
 <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
 
 
-  <title>CodePen - Instagram Profile Page</title>
+  <title>CodePen - Influencer Profile Page</title>
 
 
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css'>
 <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.0.1/css/unicons.css'>
 
 <style>
-/* -
--*-~*~-*-*-~*~-*-*-~*~* |
-●▬▬▬▬▬▬▬๑۩۩๑▬▬▬▬▬▬▬●
-Made by ~
-Areal Alien ❥ 雷克斯
-●▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬●
-──────▄▀▄─────▄▀▄
-─────▄█░░▀▀▀▀▀░░█▄
-─▄▄──█░░░░░░░░░░░█──▄▄
-█▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
--*-~*~-*-*-~*~-*-*-~*~* |
-- */
 :root {
   --bc: #efeeee;
   --white: #ffffff;
@@ -487,14 +475,14 @@ Enjoy the code <3
 <div class="user-header-inner">
   <div class="uh-left">
     <div class="uh-image">
-      <img class="uh-image-inner" src="https://i.imgur.com/Qv1WDJq.jpg" alt="">
+      <img class="uh-image-inner" src=${influencerProfile.photoLink} alt="">
       <div class="gradient"></div>
     </div>
   </div>
   <div class="uh-right">
     <div class="user-info">
       <h3>
-        areal_alien
+        ${influencerProfile.channelName}
         <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
                             <defs><style>.cls-11{fill:var(--blue);}.cls-12{fill:#ffffff;}</style></defs><title>verified</title>
                             <g id="Layer_3" data-name="Layer 3">
@@ -506,8 +494,9 @@ Enjoy the code <3
     </div>
     <div class=user-links>
       <a><span>2.1k</span> Posts</a>
-      <a><span>421k</span> Followers</a>
+      <a><span>${influencerProfile.numOfSubscribers}</span> Subscribers</a>
       <a>Following <span>388</span></a>
+      <a>CountryCode <span>${influencerProfile.countryCode}</span></a>
     </div>
     <div class="user-bio">
       <p class="user-bio-name">Areal Alien</p>
