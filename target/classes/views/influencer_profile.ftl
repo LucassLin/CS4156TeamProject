@@ -22,18 +22,6 @@
 <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.0.1/css/unicons.css'>
 
 <style>
-/* -
--*-~*~-*-*-~*~-*-*-~*~* |
-●▬▬▬▬▬▬▬๑۩۩๑▬▬▬▬▬▬▬●
-Made by ~
-Areal Alien ❥ 雷克斯
-●▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬●
-──────▄▀▄─────▄▀▄
-─────▄█░░▀▀▀▀▀░░█▄
-─▄▄──█░░░░░░░░░░░█──▄▄
-█▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
--*-~*~-*-*-~*~-*-*-~*~* |
-- */
 :root {
   --bc: #efeeee;
   --white: #ffffff;
@@ -487,14 +475,14 @@ Enjoy the code <3
 <div class="user-header-inner">
   <div class="uh-left">
     <div class="uh-image">
-      <img class="uh-image-inner" src="https://i.imgur.com/Qv1WDJq.jpg" alt="">
+      <img class="uh-image-inner" src=${influencerProfile.photoLink} alt="">
       <div class="gradient"></div>
     </div>
   </div>
   <div class="uh-right">
     <div class="user-info">
       <h3>
-        areal_alien
+        ${influencerProfile.channelName}
         <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
                             <defs><style>.cls-11{fill:var(--blue);}.cls-12{fill:#ffffff;}</style></defs><title>verified</title>
                             <g id="Layer_3" data-name="Layer 3">
@@ -503,12 +491,12 @@ Enjoy the code <3
                                 <path class="cls-12" d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z" transform="translate(-322.83 -335.95)"/></g>
                         </svg>
       </h3>
-      <button class="btn">Edit Profile</button>
     </div>
     <div class=user-links>
       <a><span>2.1k</span> Posts</a>
-      <a><span>421k</span> Followers</a>
+      <a><span>${influencerProfile.numOfSubscribers}</span> Subscribers</a>
       <a>Following <span>388</span></a>
+      <a>CountryCode <span>${influencerProfile.countryCode}</span></a>
     </div>
     <div class="user-bio">
       <p class="user-bio-name">Areal Alien</p>
@@ -572,78 +560,6 @@ Enjoy the code <3
       <div class="img-overlay"></div>
     </div>
     <img class="image" src="https://images.unsplash.com/photo-1559056986-f834be7896e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1955&q=80" alt="">
-  </div>
-  <div id="img2" class="image-wrapper">
-    <div id="iov2" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>1 244 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 137 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1582205524573-ac35c641d947?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80" alt="">
-  </div>
-  <div id="img3" class="image-wrapper">
-    <div id="iov3" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>740 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 52 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1588165231518-b4b22bfa0ddf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80" alt="">
-  </div>
-  <div id="img4" class="image-wrapper">
-    <div id="iov4" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>888 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 93 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1583314580204-efe0bcd18bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="">
-  </div>
-  <div id="img5" class="image-wrapper">
-    <div id="iov5" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>546 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 52 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1562103608-104fa5589661?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80" alt="">
-  </div>
-  <div id="img6" class="image-wrapper">
-    <div id="iov6" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>412 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 30 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1578950094540-9e34b5d393ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80" alt="">
-  </div>
-  <div id="img7" class="image-wrapper">
-    <div id="iov7" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>482 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 22 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1457523826051-6f3e5aeb89b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="">
-  </div>
-  <div id="img8" class="image-wrapper">
-    <div id="iov8" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>1 021 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 115 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1584381137528-f8529c03b9af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2082&q=80" alt="">
-  </div>
-  <div id="img9" class="image-wrapper">
-    <div id="iov9" class="img-overlay-wrapper">
-      <div class="img-btns">
-        <p>801 <i class="uil uil-heart-alt"></i> &nbsp&nbsp 50 <i class="uil uil-comment"></i></p>
-      </div>
-      <div class="img-overlay"></div>
-    </div>
-    <img class="image" src="https://images.unsplash.com/photo-1519709042477-8de6eaf1fdc5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80" alt="">
   </div>
 </div>
 </div>

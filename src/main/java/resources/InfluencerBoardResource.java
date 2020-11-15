@@ -29,7 +29,7 @@ public class InfluencerBoardResource {
     @Timed
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email){
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
@@ -38,15 +38,20 @@ public class InfluencerBoardResource {
         return new UserHomeView(user, influencers);
     }
 
-    @Path("/home/{userId}/{name}/{email}/{channelId}")
-    @Produces("text/html;charset=UTF-8")
+    @Path("/home/{name}/{email}/{channelId}")
     @GET
-    public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") Integer channelId){
-        Map<String, Integer> cntMap = new HashMap<String, Integer>();
-        InfluencerProfile influencer = new InfluencerProfile(
-                channelId, "", "", "0000000000", "female",
-                19, 1111, cntMap, "", "", 10);
-        return new InfluencerProfileView(influencer);
+    public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId){
+        ArrayList<String> tags = new ArrayList<>();
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
+
+//        InfluencerProfile influencer = new InfluencerProfile(
+//                influencers.get(0).getChannelId(), "", "", "0000000000", "female",
+//                "", tags, influencers.get(0).getPhotoLink());
+//        InfluencerProfile influencer = influencers.get(0);
+//        System.out.println("This is the link " + influencer.getPhotoLink());
+
+        return new InfluencerProfileView(influencers.get(0));
     }
 
 }
