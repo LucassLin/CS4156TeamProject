@@ -1,0 +1,231 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>SpotBugs Report</title>
+      <style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+		</style>
+   </head>
+   <body>
+      <h1>SpotBugs Report</h1>
+      <p>Produced using <a href="https://spotbugs.github.io">SpotBugs</a>4.1.3.</p>
+      <p>Project: 
+			InfluencerBoard[InfluencerBoard]</p>
+      <h2>Metrics</h2>
+      <p>202 lines of code analyzed,
+	in 11 classes, 
+	in 5 packages.</p>
+      <table width="500" cellpadding="5" cellspacing="2">
+         <tr class="tableheader">
+            <th align="left">Metric</th>
+            <th align="right">Total</th>
+            <th align="right">Density*</th>
+         </tr>
+         <tr class="tablerow0">
+            <td>High Priority Warnings</td>
+            <td align="right">2</td>
+            <td align="right">9.90</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>Medium Priority Warnings</td>
+            <td align="right">1</td>
+            <td align="right">4.95</td>
+         </tr>
+         <tr class="$totalClass">
+            <td>
+               <b>Total Warnings</b>
+            </td>
+            <td align="right">
+               <b>3</b>
+            </td>
+            <td align="right">
+               <b>14.85</b>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <i>(* Defects per Thousand lines of non-commenting source statements)</i>
+      </p>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>Summary</h2>
+      <table width="500" cellpadding="5" cellspacing="2">
+         <tr class="tableheader">
+            <th align="left">Warning Type</th>
+            <th align="right">Number</th>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_I18N">Internationalization Warnings</a>
+            </td>
+            <td align="right">1</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <a href="#Warnings_STYLE">Dodgy code Warnings</a>
+            </td>
+            <td align="right">2</td>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <b>Total</b>
+            </td>
+            <td align="right">
+               <b>3</b>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h1>Warnings</h1>
+      <p>Click on each warning link to see a full description of the issue, and
+	    details of how to resolve it.</p>
+      <h2>
+         <a name="Warnings_I18N">Internationalization Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+            </td>
+            <td width="10%" valign="top">High</td>
+            <td width="70%">
+               <p>Found reliance on default encoding in tasks.GetChannelAnalyticsTask.getInfluencers(int): new java.io.FileReader(String)<br/>
+                  <br/>
+                  <br/>In file GetChannelAnalyticsTask.java GetChannelAnalyticsTask.java,
+					
+						line 22 22<br/>In class tasks.GetChannelAnalyticsTask<br/>In method tasks.GetChannelAnalyticsTask.getInfluencers(int)<br/>Called method new java.io.FileReader(String)<br/>At GetChannelAnalyticsTask.java:[line 22]<br/>At GetChannelAnalyticsTask.java:[line 22]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="Warnings_STYLE">Dodgy code Warnings</a>
+      </h2>
+      <table class="warningtable"
+             width="100%"
+             cellspacing="2"
+             cellpadding="5">
+         <tr class="tableheader">
+            <th align="left">Warning</th>
+            <th align="left">Priority</th>
+            <th align="left">Details</th>
+         </tr>
+         <tr class="tablerow1">
+            <td width="20%" valign="top">
+               <a href="#DLS_DEAD_LOCAL_STORE">Dead store to local variable</a>
+            </td>
+            <td width="10%" valign="top">High</td>
+            <td width="70%">
+               <p>Dead store to tags in resources.InfluencerBoardResource.getInfluencerForUser(String)<br/>
+                  <br/>
+                  <br/>In file InfluencerBoardResource.java InfluencerBoardResource.java,
+					
+						line 44 44<br/>In class resources.InfluencerBoardResource<br/>In method resources.InfluencerBoardResource.getInfluencerForUser(String)<br/>Local variable named tags<br/>At InfluencerBoardResource.java:[line 44]<br/>At InfluencerBoardResource.java:[line 44]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0">
+            <td width="20%" valign="top">
+               <a href="#NP_DEREFERENCE_OF_READLINE_VALUE">Dereference of the result of readLine() without nullcheck</a>
+            </td>
+            <td width="10%" valign="top">Medium</td>
+            <td width="70%">
+               <p>Dereference of the result of readLine() without nullcheck in tasks.GetChannelAnalyticsTask.getInfluencers(int)<br/>
+                  <br/>
+                  <br/>In file GetChannelAnalyticsTask.java GetChannelAnalyticsTask.java,
+					
+						line 28 28<br/>In class tasks.GetChannelAnalyticsTask<br/>In method tasks.GetChannelAnalyticsTask.getInfluencers(int)<br/>Value loaded from line<br/>At GetChannelAnalyticsTask.java:[line 28]<br/>At GetChannelAnalyticsTask.java:[line 28]</p>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h1>
+         <a name="Details">Warning Types</a>
+      </h1>
+      <h2>
+         <a name="DLS_DEAD_LOCAL_STORE">Dead store to local variable</a>
+      </h2>
+
+<p>
+This instruction assigns a value to a local variable,
+but the value is not read or used in any subsequent instruction.
+Often, this indicates an error, because the value computed is never
+used.
+</p>
+<p>
+Note that Sun's javac compiler often generates dead stores for
+final local variables.  Because SpotBugs is a bytecode-based tool,
+there is no easy way to eliminate these false positives.
+</p>
+
+    <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="DM_DEFAULT_ENCODING">Reliance on default encoding</a>
+      </h2>
+
+<p> Found a call to a method which will perform a byte to String (or String to byte) conversion, and will assume that the default platform encoding is suitable. This will cause the application behaviour to vary between platforms. Use an alternative API and specify a charset name or Charset object explicitly.  </p>
+
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>
+         <a name="NP_DEREFERENCE_OF_READLINE_VALUE">Dereference of the result of readLine() without nullcheck</a>
+      </h2>
+
+  <p> The result of invoking readLine() is dereferenced without checking to see if the result is null. If there are no more lines of text
+to read, readLine() will return null and dereferencing that will generate a null pointer exception.
+</p>
+
+    <p>
+         <br/>
+         <br/>
+      </p>
+   </body>
+</html>

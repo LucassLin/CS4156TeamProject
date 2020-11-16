@@ -11,7 +11,7 @@ public class UserHomeView extends View {
     private final UserProfile userProfile;
     private final ArrayList<InfluencerProfile> influencers;
 
-    public UserHomeView(UserProfile userProfile, ArrayList<InfluencerProfile> influencers){
+    public UserHomeView(UserProfile userProfile, ArrayList<InfluencerProfile> influencers) {
         super("user_home.ftl");
         this.userProfile = userProfile;
         this.influencers = influencers;

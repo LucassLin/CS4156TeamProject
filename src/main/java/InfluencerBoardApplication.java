@@ -13,7 +13,7 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return "hello world";
     }
 

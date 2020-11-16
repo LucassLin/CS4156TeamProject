@@ -1,11 +1,8 @@
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class InfluencerBoardConfiguration extends Configuration {

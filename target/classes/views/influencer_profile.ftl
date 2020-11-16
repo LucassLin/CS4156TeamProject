@@ -15,7 +15,7 @@
 <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
 
 
-  <title>CodePen - Instagram Profile Page</title>
+  <title>CodePen - Influencer Profile Page</title>
 
 
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css'>
