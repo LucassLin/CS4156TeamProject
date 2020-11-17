@@ -10,7 +10,7 @@ public class GetChannelAnalyticsTaskTest {
 
     @Test
     public void getInfluencersTest(){
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(6);
         assertEquals(influencers.get(0).getChannelId(), "UCw8ZhLPdQ0u_Y-TLKd61hGA");
         assertEquals(influencers.get(0).getChannelName(), "1MILLION Dance Studio");
