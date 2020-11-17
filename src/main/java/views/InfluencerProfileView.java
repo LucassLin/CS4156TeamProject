@@ -22,9 +22,6 @@ public class InfluencerProfileView extends View {
         return influencerProfile;
     }
     public ArrayList<String> getVideoLinks() {
-//        for(int i=0; i<videoLinks.size(); ++i){
-//            System.out.println("actualy link is " + videoLinks.get(i));
-//        }
         return videoLinks;
     }
 }

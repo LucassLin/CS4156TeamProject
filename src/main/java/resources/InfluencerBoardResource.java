@@ -40,7 +40,7 @@ public class InfluencerBoardResource {
     @Timed
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
@@ -52,7 +52,7 @@ public class InfluencerBoardResource {
     @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
     @GET
     public UserInfluencerProfileView getInfluencerForUser(@PathParam("name") String name, @PathParam("email") String email, @PathParam("channelId") String channelId, @PathParam("likeInfo") String likeInfo) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
@@ -80,7 +80,9 @@ public class InfluencerBoardResource {
     public void sendUserLikeInfo(@PathParam("likeInfo") boolean likeInfo) {
         // do something
     }
-    
+
+    @Path("/home/{name}/{email}/{channelId}")
+    @GET
     public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException, GoogleJsonResponseException {
         ArrayList<String> tags = new ArrayList<>();
