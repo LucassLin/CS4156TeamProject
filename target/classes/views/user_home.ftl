@@ -164,8 +164,10 @@
                     <br>
                 </#list>
             </p>
+
             <a href="#" class="follow">Follow</a>
-            <#assign link = "${userProfile.email}/${influencer.channelId}">
+            <#assign link = "${userProfile.email}/${influencer.channelId}/Like">
+<#--            <#assign link = "/home/${userProfile.name}/${userProfile.email}/${influencer.channelId}">-->
             <a href=${link} class="info">More Info</a>
         </figcaption>
     </figure>

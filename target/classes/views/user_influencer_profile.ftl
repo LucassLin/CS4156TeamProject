@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="views.UserInfluencerProfileView" -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -540,14 +541,14 @@ Enjoy the code <3
     <div class="user-header-inner">
         <div class="uh-left">
             <div class="uh-image">
-                <img class="uh-image-inner" src=${influencerProfile.photoLink} alt="">
+                <img class="uh-image-inner" src=${userInfluencerProfile.influencer.photoLink} alt="">
                 <div class="gradient"></div>
             </div>
         </div>
         <div class="uh-right">
             <div class="user-info">
                 <h3>
-                    ${influencerProfile.channelName}
+                    ${userInfluencerProfile.influencer.channelName}
                     <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
                         <defs>
                             <style>.cls-11 {
@@ -573,13 +574,19 @@ Enjoy the code <3
             </div>
             <div class=user-links>
                 <a><span>2.1k</span> Posts</a>
-                <a><span>${influencerProfile.numOfSubscribers}</span> Subscribers</a>
+                <a><span>${userInfluencerProfile.influencer.numOfSubscribers}</span> Subscribers</a>
                 <a>Following <span>388</span></a>
-                <a>CountryCode <span>${influencerProfile.countryCode}</span></a>
+                <a>CountryCode <span>${userInfluencerProfile.influencer.countryCode}</span></a>
             </div>
             <div class="user-bio">
                 <p class="user-bio-name">Areal Alien</p>
                 <p>This is the user biography 😄<br/>It also has another line.</p>
+                <br/>
+                <#if userInfluencerProfile.liked == "Liked">
+                    <a href="Like">${userInfluencerProfile.liked}</a>
+                <#else>
+                    <a href="Liked">${userInfluencerProfile.liked}</a>
+                </#if>
             </div>
         </div>
     </div>
