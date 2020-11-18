@@ -8,8 +8,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.model.*;
-import tasks.Auth;
 import com.google.api.services.youtube.YouTube;
+
+import tasks.Auth;
+import models.InfluencerProfile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,10 +41,52 @@ public class Search {
      * to make YouTube Data API requests.
      */
     private static YouTube youtube;
+    private String apiKey = "AIzaSyAccsqGaUxwL9ht-arv7om2_RKQpXT_f70";
 
     private String channelID;
     public Search(String channelID){
         this.channelID = channelID;
+    }
+
+    public InfluencerProfile getInfluencerProfileByID(){
+        try {
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
+                public void initialize(HttpRequest request) throws IOException {
+                }
+            }).setApplicationName("youtube-cmdline-search-sample").build();
+
+            YouTube.Channels.List request = youtube.channels()
+                    .list("snippet,contentDetails,statistics");
+            request.setKey(apiKey);
+            ChannelListResponse response = request.setId(this.channelID).execute();
+            InfluencerProfile influencerProfile;
+            if(response.getItems().size() == 0){
+                System.out.println("No channel match the ID");
+            }
+            ArrayList<String> tags = new ArrayList<>();
+            Channel item = response.getItems().get(0);
+            ChannelSnippet snippet = item.getSnippet();
+            influencerProfile = new InfluencerProfile(item.getId(), snippet.getTitle(),
+                    "No Type", snippet.getCountry(),
+                    String.valueOf(item.getStatistics().getSubscriberCount()),
+                    String.valueOf(item.getStatistics().getVideoCount()), tags,
+                    String.valueOf(snippet.getThumbnails().getHigh().getUrl()),
+                    snippet.getDescription());
+            return influencerProfile;
+
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        ArrayList<String> dummyTags = new ArrayList<>();
+        InfluencerProfile dummy = new InfluencerProfile("N/A","N/A",
+                "N/A","N/A","N/A","N/A",dummyTags,
+                "N/A");
+        return dummy;
     }
 
     /**
@@ -63,10 +107,7 @@ public class Search {
             }).setApplicationName("youtube-cmdline-search-sample").build();
 
             // Prompt the user to enter a query term.
-            String apiKey = "AIzaSyAccsqGaUxwL9ht-arv7om2_RKQpXT_f70";
 
-            // Define the API request for retrieving search results.
-            //YouTube.Search.List search = youtube.search().list("id,snippet");
             YouTube.Playlists.List request = youtube.playlists()
                     .list("snippet,contentDetails");
             request.setKey(apiKey);

@@ -515,8 +515,8 @@ Enjoy the code <3
                 <a>CountryCode <span>${influencerProfile.countryCode}</span></a>
             </div>
             <div class="user-bio">
-                <p class="user-bio-name">Areal Alien</p>
-                <p>This is the user biography 😄<br/>It also has another line.</p>
+                <p class="user-bio-name"></p>
+                <p>${influencerProfile.description}</p>
             </div>
         </div>
     </div>

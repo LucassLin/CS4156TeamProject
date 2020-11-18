@@ -15,6 +15,7 @@ public class InfluencerProfile {
     //private String channelLink;
     private String photoLink;
     //private double rating;
+    private String description;
 
     public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
                              String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
@@ -30,6 +31,24 @@ public class InfluencerProfile {
         this.photoLink = photoLink;
         //this.rating = rating;
         this.tags = tags;
+        this.description = "No Description";
+    }
+
+    public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
+                             String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
+                             String photoLink, String description) {
+        this.channelId = channelId;
+        this.channelName = channelName;
+        this.type = type;
+        this.countryCode = countryCode;
+        this.numOfSubscribers = numOfSubscribers;
+        this.averagePostViews = averagePostViews;
+        //this.tagFreq = tagFreq;
+        //this.channelLink = channelLink;
+        this.photoLink = photoLink;
+        //this.rating = rating;
+        this.tags = tags;
+        this.description = description;
     }
 
     public String getChannelId() {
@@ -63,4 +82,6 @@ public class InfluencerProfile {
     public String getChannelName() {
         return channelName;
     }
+
+    public String getDescription() { return description; }
 }

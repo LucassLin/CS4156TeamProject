@@ -85,17 +85,17 @@ public class InfluencerBoardResource {
     @GET
     public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException, GoogleJsonResponseException {
-        ArrayList<String> tags = new ArrayList<>();
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
-        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
-        InfluencerProfile curInfluencer = influencers.get(0);
-        for (int i=0; i<3; ++i){
-            if(influencers.get(i).getChannelId().equals(channelId)){
-                curInfluencer = influencers.get(i);
-                System.out.println("Influencer is " + curInfluencer.getChannelId());
-                break;
-            }
-        }
+//        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+//        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
+//        InfluencerProfile curInfluencer = influencers.get(0);
+//        for (int i=0; i<3; ++i){
+//            if(influencers.get(i).getChannelId().equals(channelId)){
+//                curInfluencer = influencers.get(i);
+//                System.out.println("Influencer is " + curInfluencer.getChannelId());
+//                break;
+//            }
+//        }
+
         Search search = new Search(channelId);
         ArrayList<String> links = search.getVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
@@ -103,6 +103,7 @@ public class InfluencerBoardResource {
             threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
             //System.out.println("link is " + threeLinks.get(i));
         }
+        InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
         return new InfluencerProfileView(curInfluencer, threeLinks);
     }
 
