@@ -25,7 +25,6 @@ import java.util.Properties;
 /**
  * Print a list of videos matching a search term.
  *
- * @author Jeremy Walker
  */
 public class Search {
 

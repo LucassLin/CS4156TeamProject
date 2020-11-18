@@ -49,53 +49,42 @@ public class InfluencerBoardResource {
         return new UserHomeView(user, influencers);
     }
 
-    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
-    @GET
-    public UserInfluencerProfileView getInfluencerForUser(@PathParam("name") String name, @PathParam("email") String email, @PathParam("channelId") String channelId, @PathParam("likeInfo") String likeInfo) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
-        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
-        ArrayList<String> interests = new ArrayList<>();
-        interests.add("music");
-        interests.add("movie");
-        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
-        InfluencerProfile currInfluencer = null;
-        for (InfluencerProfile i : influencers) {
-            if (i.getChannelId().equals(channelId)){
-                currInfluencer = i;
-            }
-        }
-        UserInfluencerProfile userInfluencerProfile = new UserInfluencerProfile(user, currInfluencer);
-        userInfluencerProfile.setLiked(likeInfo);
-//        InfluencerProfile influencer = new InfluencerProfile(
-//                influencers.get(0).getChannelId(), "", "", "0000000000", "female",
-//                "", tags, influencers.get(0).getPhotoLink());
-//        InfluencerProfile influencer = influencers.get(0);
-//        System.out.println("This is the link " + influencer.getPhotoLink());
+//    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
+//    @GET
+//    public UserInfluencerProfileView getInfluencerForUser(@PathParam("name") String name, @PathParam("email") String email, @PathParam("channelId") String channelId, @PathParam("likeInfo") String likeInfo) throws IOException {
+//        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+//        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
+//        ArrayList<String> interests = new ArrayList<>();
+//        interests.add("music");
+//        interests.add("movie");
+//        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
+//        InfluencerProfile currInfluencer = null;
+//        for (InfluencerProfile i : influencers) {
+//            if (i.getChannelId().equals(channelId)){
+//                currInfluencer = i;
+//            }
+//        }
+//        UserInfluencerProfile userInfluencerProfile = new UserInfluencerProfile(user, currInfluencer);
+//        userInfluencerProfile.setLiked(likeInfo);
+////        InfluencerProfile influencer = new InfluencerProfile(
+////                influencers.get(0).getChannelId(), "", "", "0000000000", "female",
+////                "", tags, influencers.get(0).getPhotoLink());
+////        InfluencerProfile influencer = influencers.get(0);
+////        System.out.println("This is the link " + influencer.getPhotoLink());
+//
+//        return new UserInfluencerProfileView(userInfluencerProfile);
+//    }
 
-        return new UserInfluencerProfileView(userInfluencerProfile);
-    }
-
-    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
-    @POST
-    public void sendUserLikeInfo(@PathParam("likeInfo") boolean likeInfo) {
-        // do something
-    }
+//    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
+//    @POST
+//    public void sendUserLikeInfo(@PathParam("likeInfo") boolean likeInfo) {
+//        // do something
+//    }
 
     @Path("/home/{name}/{email}/{channelId}")
     @GET
     public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException, GoogleJsonResponseException {
-//        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
-//        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
-//        InfluencerProfile curInfluencer = influencers.get(0);
-//        for (int i=0; i<3; ++i){
-//            if(influencers.get(i).getChannelId().equals(channelId)){
-//                curInfluencer = influencers.get(i);
-//                System.out.println("Influencer is " + curInfluencer.getChannelId());
-//                break;
-//            }
-//        }
-
         Search search = new Search(channelId);
         ArrayList<String> links = search.getVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
@@ -105,6 +94,12 @@ public class InfluencerBoardResource {
         }
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
         return new InfluencerProfileView(curInfluencer, threeLinks);
+    }
+
+    @POST
+    @Path("/home/{name}/{email}/{channelId}/likeMe")
+    public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+        System.out.println(email + " -> " + channelId);
     }
 
 }

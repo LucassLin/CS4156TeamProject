@@ -26,12 +26,13 @@ public class InfluencerBoardResourceTest {
         assertEquals(userHomeView.getUserProfile().getEmail(), "wxuejing96@gmail.com");
     }
 
-    @Test
-    public void getInfluencerForUserTest() throws IOException {
-        InfluencerBoardResource resource = new InfluencerBoardResource();
-        UserInfluencerProfileView userInfluencerProfileView = resource.getInfluencerForUser("April Wang", "wxuejing96@gmail.com", "blackpink", "Liked");
-        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getUser().getName(), "April Wang");
-        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getUser().getEmail(), "wxuejing96@gmail.com");
-        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getLiked(), "Liked");
-    }
+
+//    @Test
+//    public void getInfluencerForUserTest() throws IOException {
+//        InfluencerBoardResource resource = new InfluencerBoardResource();
+//        UserInfluencerProfileView userInfluencerProfileView = resource.getInfluencerForUser("April Wang", "wxuejing96@gmail.com", "blackpink", "Liked");
+//        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getUser().getName(), "April Wang");
+//        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getUser().getEmail(), "wxuejing96@gmail.com");
+//        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getLiked(), "Liked");
+//    }
 }
