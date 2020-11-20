@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class UserProfile {
 
-    private String userId;
-    private String name;
-    private String email;
-    private String phone;
-    private String gender;
-    private int age;
-    private String country;
-    private ArrayList<String> interests;
+    private final String userId;
+    private final String name;
+    private final String email;
+    private final String phone;
+    private final String gender;
+    private final int age;
+    private final String country;
+    private final ArrayList<String> interests;
 
     public UserProfile(String userId, String name, String email, String phone, String gender, int age, String country, ArrayList<String> interests) {
         this.userId = userId;

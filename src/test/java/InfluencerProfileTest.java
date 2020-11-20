@@ -1,12 +1,11 @@
 import models.InfluencerProfile;
 import org.junit.Test;
 import resources.InfluencerBoardResource;
-import views.InfluencerProfileView;
 import tasks.YoutubeAPI;
+import views.InfluencerProfileView;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,3 +1,9 @@
+/**
+ * This file defines the user influencer profile class.
+ *
+ * @author Xuejing Wang, Chucheng Lin.
+ */
+
 package models;
 
 import java.util.ArrayList;
@@ -5,11 +11,11 @@ import java.util.Optional;
 
 public class UserInfluencerProfile {
 
-    private UserProfile user;
-    private InfluencerProfile influencer;
+    protected final UserProfile user;
+    protected final InfluencerProfile influencer;
     String liked;
-    private ArrayList<String> comments;
-    private Optional<Integer> rating;
+    protected final ArrayList<String> comments;
+    protected Optional<Integer> rating;
 
     public UserInfluencerProfile(UserProfile user, InfluencerProfile influencer) {
         this.user = user;
@@ -47,7 +53,7 @@ public class UserInfluencerProfile {
         this.rating = rating;
     }
 
-    public void addComment(String comment){
+    public void addComment(String comment) {
         this.comments.add(comment);
     }
 }

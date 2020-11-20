@@ -3,11 +3,12 @@ package tasks;
 import models.InfluencerProfile;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class GetChannelAnalyticsTask {
 
-    private String srcFile;
+    private final String srcFile;
 
     public GetChannelAnalyticsTask(String srcFile) {
         this.srcFile = srcFile;
@@ -17,7 +18,7 @@ public class GetChannelAnalyticsTask {
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
         try {
             InputStream inputStream = new FileInputStream(srcFile);
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             String line;
             int i = 0;
             while (i <= num) {
@@ -34,7 +35,7 @@ public class GetChannelAnalyticsTask {
                     String[] preTags = values[2].substring(1, values[2].length() - 1).split(",");
                     ArrayList<String> tags = new ArrayList<>();
                     for (String tag : preTags) {
-                        tag = tag.replaceAll("[ \']", "");
+                        tag = tag.replaceAll("[ ']", "");
                         tags.add(tag);
                     }
                     String photoLink = values[8];

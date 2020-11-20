@@ -3,23 +3,15 @@ package resources;
 import com.codahale.metrics.annotation.Timed;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import models.InfluencerProfile;
-import models.UserInfluencerProfile;
 import models.UserProfile;
 import tasks.GetChannelAnalyticsTask;
-import views.UserInfluencerProfileView;
+import tasks.Search;
+import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import java.io.IOException;
-
-import views.InfluencerProfileView;
-import tasks.YoutubeAPI;
-import tasks.Search;
-
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.io.IOException;
@@ -40,7 +32,7 @@ public class InfluencerBoardResource {
     @Timed
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
@@ -84,11 +76,11 @@ public class InfluencerBoardResource {
     @Path("/home/{name}/{email}/{channelId}")
     @GET
     public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
-            throws GeneralSecurityException, IOException, GoogleJsonResponseException {
+            throws GeneralSecurityException, IOException {
         Search search = new Search(channelId);
         ArrayList<String> links = search.getVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
-        for(int i=0; i<3; ++i){
+        for (int i = 0; i < 3; ++i) {
             threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
             //System.out.println("link is " + threeLinks.get(i));
         }

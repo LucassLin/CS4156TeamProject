@@ -9,11 +9,11 @@ import static org.junit.Assert.assertEquals;
 public class YoutubeAPITest {
 
     @Test
-    public void getVideos(){
+    public void getVideos() {
         Search search = new Search("UC_x5XG1OV2P6uZZ5FSM9Ttw");
         ArrayList<String> links = search.getVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
-        for(int i=0; i<3; ++i){
+        for (int i = 0; i < 3; ++i) {
             threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
         }
         assertEquals(threeLinks.get(0), "https://www.youtube.com/embed/fV54rTntWX4");
@@ -22,7 +22,7 @@ public class YoutubeAPITest {
     }
 
     @Test
-    public void getInfluencerProfile(){
+    public void getInfluencerProfile() {
         Search search = new Search("UC_x5XG1OV2P6uZZ5FSM9Ttw");
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
         assertEquals(curInfluencer.getChannelName(), "Google Developers");

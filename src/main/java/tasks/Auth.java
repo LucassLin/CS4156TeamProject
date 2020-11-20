@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class Auth {
     public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException {
 
         // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/client_secret.json"));
+        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/client_secret.json"), StandardCharsets.UTF_8);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").

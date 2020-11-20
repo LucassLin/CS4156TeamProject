@@ -166,13 +166,20 @@
             </p>
 
             <form method="post" action="${userProfile.email}/${influencer.channelId}/likeMe">
-              <input type="submit" value="Follow">
+                <input id="follow${influencer.channelId}" type="submit" value="Follow" onclick="changeStatus(this.id)">
             </form>
             <#assign link = "${userProfile.email}/${influencer.channelId}">
             <a href=${link} class="info">More Info</a>
         </figcaption>
     </figure>
 </#list>
+<script>
+    function changeStatus(id) {
+        var elem = document.getElementById(id);
+        if (elem.value == "Follow") elem.value = "Following";
+        else elem.value = "Follow";
+    }
+</script>
 
 <#--<a href="#" onclick="signOut();">Sign out</a>
 <script>

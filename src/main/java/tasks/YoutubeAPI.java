@@ -10,23 +10,21 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.PlaylistItem;
-import com.google.api.services.youtube.model.PlaylistListResponse;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
-import com.sun.xml.bind.v2.runtime.reflect.Lister;
+import com.google.api.services.youtube.model.PlaylistListResponse;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class YoutubeAPI {
-    private String channelID;
-    private static final String CLIENT_SECRETS= "/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/client_secret.json";
+    private final String channelID;
+    private static final String CLIENT_SECRETS = "/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/client_secret.json";
     private static final Collection<String> SCOPES =
             Arrays.asList("https://www.googleapis.com/auth/youtube.readonly");
 
@@ -34,9 +32,10 @@ public class YoutubeAPI {
 
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    public YoutubeAPI(String channelID){
+    public YoutubeAPI(String channelID) {
         this.channelID = channelID;
     }
+
     /**
      * Create an authorized Credential object.
      *
@@ -46,7 +45,7 @@ public class YoutubeAPI {
     public static Credential authorize(final NetHttpTransport httpTransport) throws IOException {
         // Load client secrets.
         InputStream in = YoutubeAPI.class.getResourceAsStream(CLIENT_SECRETS);
-        FileInputStream fis=new FileInputStream(new File(CLIENT_SECRETS));
+        FileInputStream fis = new FileInputStream(new File(CLIENT_SECRETS));
 
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(fis));
 
@@ -56,6 +55,7 @@ public class YoutubeAPI {
                         .build();
         Credential credential =
                 new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        in.close();
         return credential;
     }
 
@@ -80,7 +80,7 @@ public class YoutubeAPI {
      * @throws GeneralSecurityException, IOException, GoogleJsonResponseException
      */
     public String getPlayListID()
-            throws GeneralSecurityException, IOException, GoogleJsonResponseException {
+            throws GeneralSecurityException, IOException {
         YouTube youtubeService = getService();
         // Define and execute the API request
         YouTube.Playlists.List request = youtubeService.playlists()
@@ -93,7 +93,7 @@ public class YoutubeAPI {
     }
 
     public ArrayList<String> getVideoID()
-            throws GeneralSecurityException, IOException, GoogleJsonResponseException{
+            throws GeneralSecurityException, IOException {
         YouTube youtubeService = getService();
         // Define and execute the API request
         YouTube.PlaylistItems.List request = youtubeService.playlistItems()
@@ -103,7 +103,7 @@ public class YoutubeAPI {
                 .execute();
         ArrayList<String> videoList = new ArrayList<>();
         List<PlaylistItem> items = response.getItems();
-        for(int i=0; i<items.size() && i<5; ++i){
+        for (int i = 0; i < items.size() && i < 5; ++i) {
             //System.out.println("Video id is "+(items.get(i).getSnippet().getResourceId().getVideoId()));
             videoList.add(items.get(i).getSnippet().getResourceId().getVideoId());
         }

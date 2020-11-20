@@ -1,9 +1,7 @@
 package views;
 
 import io.dropwizard.views.View;
-import models.InfluencerProfile;
 import models.UserInfluencerProfile;
-import models.UserProfile;
 
 public class UserInfluencerProfileView extends View {
 

@@ -1,22 +1,27 @@
+/**
+ * This file defines the influencer profile class.
+ *
+ * @author Xuejing Wang, Chucheng Lin.
+ */
 package models;
 
 import java.util.ArrayList;
 
 public class InfluencerProfile {
 
-    private String channelId;
-    private String channelName;
-    private String type;
-    private String countryCode;
-    private String numOfSubscribers;
-    private String averagePostViews;
-    private ArrayList<String> tags;
-    //private Map<String, Integer> tagFreq;
-    //private String channelLink;
-    private String photoLink;
-    //private double rating;
-    private String description;
+    protected final String channelId;
+    protected final String channelName;
+    protected final String type;
+    protected final String countryCode;
+    protected final String numOfSubscribers;
+    protected final String averagePostViews;
+    protected final ArrayList<String> tags;
+    protected final String photoLink;
+    protected final String description;
 
+    /**
+     * Constructor without channel description.
+     */
     public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
                              String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
                              String photoLink) {
@@ -26,14 +31,14 @@ public class InfluencerProfile {
         this.countryCode = countryCode;
         this.numOfSubscribers = numOfSubscribers;
         this.averagePostViews = averagePostViews;
-        //this.tagFreq = tagFreq;
-        //this.channelLink = channelLink;
         this.photoLink = photoLink;
-        //this.rating = rating;
         this.tags = tags;
         this.description = "No Description";
     }
 
+    /**
+     * Constructor with channel description.
+     */
     public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
                              String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
                              String photoLink, String description) {
@@ -43,10 +48,7 @@ public class InfluencerProfile {
         this.countryCode = countryCode;
         this.numOfSubscribers = numOfSubscribers;
         this.averagePostViews = averagePostViews;
-        //this.tagFreq = tagFreq;
-        //this.channelLink = channelLink;
         this.photoLink = photoLink;
-        //this.rating = rating;
         this.tags = tags;
         this.description = description;
     }
@@ -83,5 +85,7 @@ public class InfluencerProfile {
         return channelName;
     }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 }

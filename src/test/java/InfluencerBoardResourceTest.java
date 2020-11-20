@@ -1,9 +1,7 @@
-import models.UserInfluencerProfile;
 import org.junit.Test;
 import resources.InfluencerBoardResource;
 import views.LoginView;
 import views.UserHomeView;
-import views.UserInfluencerProfileView;
 
 import java.io.IOException;
 
@@ -12,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class InfluencerBoardResourceTest {
 
     @Test
-    public void getWelcomeTest(){
+    public void getWelcomeTest() {
         InfluencerBoardResource resource = new InfluencerBoardResource();
         LoginView loginView = resource.getWelcome();
         assertEquals(loginView.getWelcomeWords(), "Welcome to InfluencerBoard");
