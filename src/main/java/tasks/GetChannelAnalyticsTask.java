@@ -14,6 +14,11 @@ public class GetChannelAnalyticsTask {
         this.srcFile = srcFile;
     }
 
+    /**
+     * Get an array of influencers.
+     * @param num an int number
+     * @return ArrayList<> influencers
+     */
     public ArrayList<InfluencerProfile> getInfluencers(int num) throws IOException {
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
         try {
