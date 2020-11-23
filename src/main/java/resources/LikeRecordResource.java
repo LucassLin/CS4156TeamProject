@@ -35,9 +35,15 @@ public class LikeRecordResource {
     @Path("/{email}/{channelId}")
     public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
         LikeRecord record = new LikeRecord(email, channelId);
-        createLikeRecord(record);
-        System.out.println(email + " -> " + channelId);
         List<LikeRecord> allLikes = listLikes(email);
+        boolean duplicate = false;
+        for(LikeRecord records : allLikes){
+            if(records.getChannelID().equals(channelId) && records.getEmail().equals(email)) {
+                duplicate = true;
+                break;
+            }
+        }
+        if(!duplicate) createLikeRecord(record);
         for(LikeRecord r : allLikes){
             System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
         }

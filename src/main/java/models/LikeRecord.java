@@ -22,6 +22,7 @@ import java.util.Objects;
                 )
         })
 
+
 public class LikeRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

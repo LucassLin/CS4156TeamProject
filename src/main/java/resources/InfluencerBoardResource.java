@@ -13,22 +13,24 @@ import tasks.Search;
 import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
-import db.LikeRecordDAO;
+import resources.LikeRecordResource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("")
 public class InfluencerBoardResource {
 
     @Context
-    private javax.ws.rs.container.ResourceContext rc;
+    private ResourceContext rc;
 
     @Path("/login")
     @Timed
@@ -47,6 +49,10 @@ public class InfluencerBoardResource {
         interests.add("music");
         interests.add("movie");
         UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
+        /*
+        How to call another resource's function?
+        List<LikeRecord> res = rc.getResource(LikeRecordResource.class).listLikes("dsa");
+         */
         return new UserHomeView(user, influencers);
     }
 

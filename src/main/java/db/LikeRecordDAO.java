@@ -4,6 +4,7 @@ import models.LikeRecord;
 import io.dropwizard.hibernate.AbstractDAO;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
     }
 
     public LikeRecord create(LikeRecord record) {
-        return persist(record);
+//        try{
+            return persist(record);
+//        } catch (ConstraintViolationException ex){
+//            System.err.println("Violates Unique Constraint......");
+//        }
+//        return null;
     }
 
     @SuppressWarnings("unchecked")
