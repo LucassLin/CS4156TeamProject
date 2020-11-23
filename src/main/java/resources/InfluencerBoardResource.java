@@ -2,24 +2,33 @@ package resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import db.LikeRecordDAO;
 import models.InfluencerProfile;
+import models.LikeRecord;
 import models.UserProfile;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import tasks.GetChannelAnalyticsTask;
 import tasks.Search;
 import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
+import db.LikeRecordDAO;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 @Path("")
 public class InfluencerBoardResource {
+
+    @Context
+    private javax.ws.rs.container.ResourceContext rc;
 
     @Path("/login")
     @Timed
@@ -32,7 +41,7 @@ public class InfluencerBoardResource {
     @Timed
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
@@ -88,11 +97,12 @@ public class InfluencerBoardResource {
         return new InfluencerProfileView(curInfluencer, threeLinks);
     }
 
-    @POST
-    @Path("/home/{name}/{email}/{channelId}/likeMe")
-    public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
-        System.out.println(email + " -> " + channelId);
-    }
+//    @POST
+//    @Path("/home/{name}/{email}/{channelId}/likeMe")
+//    public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+//        LikeRecord record = new LikeRecord(email, channelId);
+//        System.out.println(email + " -> " + channelId);
+//    }
 
 }
 

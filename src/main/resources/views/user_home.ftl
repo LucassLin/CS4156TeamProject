@@ -165,7 +165,7 @@
                 </#list>
             </p>
 
-            <form method="post" action="${userProfile.email}/${influencer.channelId}/likeMe">
+            <form method="post" action="/LikeRecord/${userProfile.email}/${influencer.channelId}">
                 <input id="follow${influencer.channelId}" type="submit" value="Follow" onclick="changeStatus(this.id)">
             </form>
             <#assign link = "${userProfile.email}/${influencer.channelId}">
