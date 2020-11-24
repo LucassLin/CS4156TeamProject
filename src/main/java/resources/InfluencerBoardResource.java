@@ -3,6 +3,7 @@ package resources;
 import com.codahale.metrics.annotation.Timed;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import db.LikeRecordDAO;
+import io.dropwizard.hibernate.UnitOfWork;
 import models.InfluencerProfile;
 import models.LikeRecord;
 import models.UserProfile;
@@ -15,12 +16,10 @@ import views.LoginView;
 import views.UserHomeView;
 import resources.LikeRecordResource;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -32,6 +31,14 @@ public class InfluencerBoardResource {
     @Context
     private ResourceContext rc;
 
+    @GET
+    @Path("/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void get(final @Context ResourceContext resourceContext) {
+        final LikeRecordResource calculatorResource = resourceContext.getResource(LikeRecordResource.class);
+    }
+
+
     @Path("/login")
     @Timed
     @GET
@@ -41,18 +48,23 @@ public class InfluencerBoardResource {
 
     @Path("/home/{name}/{email}")
     @Timed
+    @UnitOfWork
     @GET
-    public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
+    public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
+                                       final @Context ResourceContext resourceContext) throws IOException {
         GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
         interests.add("movie");
         UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
-        /*
-        How to call another resource's function?
-        List<LikeRecord> res = rc.getResource(LikeRecordResource.class).listLikes("dsa");
-         */
+
+        final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
+        List<LikeRecord> records = resource.listLikes("lincclucas@gmail.com");
+        for(LikeRecord r : records){
+            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+        }
+
         return new UserHomeView(user, influencers);
     }
 
@@ -111,4 +123,3 @@ public class InfluencerBoardResource {
 //    }
 
 }
-

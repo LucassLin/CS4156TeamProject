@@ -6,12 +6,20 @@ import models.LikeRecord;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 
 @Path("/LikeRecord")
 @Produces(MediaType.APPLICATION_JSON)
 public class LikeRecordResource {
+
     private final LikeRecordDAO likeRecordDAO;
 
     public LikeRecordResource(LikeRecordDAO likeRecordDAO) {
@@ -26,7 +34,7 @@ public class LikeRecordResource {
 
     @GET
     @UnitOfWork
-    public List<LikeRecord> listLikes(String email) {
+    public List<LikeRecord> listLikes(@PathParam("email") String email) {
         return likeRecordDAO.findAll(email);
     }
 

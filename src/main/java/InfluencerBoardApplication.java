@@ -51,9 +51,9 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
 
     @Override
     public void run(InfluencerBoardConfiguration configuration, Environment environment) {
-        final InfluencerBoardResource resource = new InfluencerBoardResource();
-        environment.jersey().register(resource);
         final LikeRecordDAO dao = new LikeRecordDAO(hibernateBundle.getSessionFactory());
         environment.jersey().register(new LikeRecordResource(dao));
+        final InfluencerBoardResource resource = new InfluencerBoardResource();
+        environment.jersey().register(resource);
     }
 }
