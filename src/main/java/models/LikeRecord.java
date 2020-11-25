@@ -38,6 +38,7 @@ public class LikeRecord {
         
     /**
      * Constructor.
+     *
      * @param email
      * the user's email
      * @param channelID
