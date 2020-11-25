@@ -21,6 +21,22 @@ public class InfluencerProfile {
 
     /**
      * Constructor without channel description.
+     * @param channelId
+     * the id of the channel
+     * @param channelName
+     * the name of the channel
+     * @param type
+     * the type of the channel
+     * @param countryCode
+     * the country code of the channel
+     * @param numOfSubscribers
+     * the number of subscribers in this channel
+     * @param averagePostViews
+     * the average post views of the channel
+     * @param tags
+     * tags of the channel
+     * @param photoLink
+     * the photo link of the channel
      */
     public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
                              String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
@@ -38,6 +54,24 @@ public class InfluencerProfile {
 
     /**
      * Constructor with channel description.
+     * @param channelId
+     * the id of the channel
+     * @param channelName
+     * the name of the channel
+     * @param type
+     * the type of the channel
+     * @param countryCode
+     * the country code of the channel
+     * @param numOfSubscribers
+     * the number of subscribers in this channel
+     * @param averagePostViews
+     * the average post views of the channel
+     * @param tags
+     * tags of the channel
+     * @param photoLink
+     * the photo link of the channel
+     * @param description
+     * any description
      */
     public InfluencerProfile(String channelId, String channelName, String type, String countryCode,
                              String numOfSubscribers, String averagePostViews, ArrayList<String> tags,
