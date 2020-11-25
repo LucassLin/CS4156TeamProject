@@ -12,6 +12,7 @@ public class GetChannelAnalyticsTask {
     
     /**
      * Constructor.
+     *
      * @param srcFile
      * the source file
      */
