@@ -21,6 +21,7 @@ public class InfluencerProfile {
 
     /**
      * Constructor without channel description.
+     *
      * @param channelId
      * the id of the channel
      * @param channelName
@@ -54,6 +55,7 @@ public class InfluencerProfile {
 
     /**
      * Constructor with channel description.
+     *
      * @param channelId
      * the id of the channel
      * @param channelName
