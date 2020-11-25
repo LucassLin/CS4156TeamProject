@@ -15,6 +15,7 @@ public class UserProfile {
 
     /**
      * Constructor.
+     *
      * @param userId
      * the id of the user
      * @param name
