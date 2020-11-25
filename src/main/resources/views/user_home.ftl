@@ -181,10 +181,15 @@
                     <br>
                 </#list>
             </p>
-
-            <form method="post" action="/LikeRecord/${userProfile.email}/${influencer.channelId}">
-                <input id="follow${influencer.channelId}" type="submit" value="Follow" onclick="changeStatus(this.id)">
-            </form>
+            <#if userProfile.getFollowingChannels()?seq_contains(influencer.channelId)>
+                <form method="post" action="/LikeRecord/deleteRecord/${userProfile.email}/${influencer.channelId}">
+                    <input id="follow${influencer.channelId}" type="submit" value="Following" onclick="changeStatus(this.id)">
+                </form>
+            <#else>
+                <form method="post" action="/LikeRecord/addRecord/${userProfile.email}/${influencer.channelId}">
+                    <input id="follow${influencer.channelId}" type="submit" value="Follow" onclick="changeStatus(this.id)">
+                </form>
+            </#if>
             <#assign link = "${userProfile.email}/${influencer.channelId}">
             <a href=${link} class="info">More Info</a>
         </figcaption>

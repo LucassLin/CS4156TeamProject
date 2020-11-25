@@ -1,21 +1,16 @@
 package resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import db.LikeRecordDAO;
 import io.dropwizard.hibernate.UnitOfWork;
 import models.InfluencerProfile;
 import models.LikeRecord;
 import models.UserProfile;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import tasks.GetChannelAnalyticsTask;
 import tasks.Search;
 import views.FollowingView;
 import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
-import views.FollowingView;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ResourceContext;
@@ -53,18 +48,20 @@ public class InfluencerBoardResource {
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
                                        final @Context ResourceContext resourceContext) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
         ArrayList<String> interests = new ArrayList<>();
+        ArrayList<String> followingChannels = new ArrayList<>();
+        final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
+        List<LikeRecord> records = resource.listLikes(email);
+        for(LikeRecord r : records){
+            //System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+            Search search = new Search(r.getChannelID());
+            followingChannels.add(search.getInfluencerProfileByID().getChannelId());
+        }
         interests.add("music");
         interests.add("movie");
-        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
-
-        final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
-        List<LikeRecord> records = resource.listLikes("lincclucas@gmail.com");
-        for(LikeRecord r : records){
-            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
-        }
+        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
 
         return new UserHomeView(user, influencers);
     }
@@ -76,10 +73,10 @@ public class InfluencerBoardResource {
     public FollowingView getFollowing(@PathParam("name") String name, @PathParam("email") String email,
                                        final @Context ResourceContext resourceContext) throws IOException {
         final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
-        List<LikeRecord> records = resource.listLikes("lincclucas@gmail.com");
+        List<LikeRecord> records = resource.listLikes(email);
         ArrayList<String> following = new ArrayList<>();
         for(LikeRecord r : records){
-            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+            //System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
             Search search = new Search(r.getChannelID());
             following.add(search.getInfluencerProfileByID().getChannelName());
         }

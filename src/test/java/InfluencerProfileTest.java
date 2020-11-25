@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class InfluencerProfileTest {
 
-    @Test
+    //@Test
     public void getInfluencerProfile() throws GeneralSecurityException, IOException {
         InfluencerBoardResource resource = new InfluencerBoardResource();
         InfluencerProfileView view = resource.getInfluencerForUser("UCw8ZhLPdQ0u_Y-TLKd61hGA");

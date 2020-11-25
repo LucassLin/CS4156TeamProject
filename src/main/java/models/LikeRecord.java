@@ -1,16 +1,6 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "LikeRecord")
@@ -19,9 +9,12 @@ import java.util.Objects;
                 @NamedQuery(
                         name = "models.findAllLikes",
                         query = "SELECT l FROM LikeRecord l WHERE l.email =:userEmail"
+                ),
+                @NamedQuery(
+                        name = "models.deleteLikeRecord",
+                        query = "DELETE FROM LikeRecord l WHERE l.email =:userEmail AND l.channelID =:influencerChannelID"
                 )
         })
-
 
 public class LikeRecord {
     @Id
