@@ -12,6 +12,8 @@ public class UserProfile {
     private final int age;
     private final String country;
     private final ArrayList<String> interests;
+    private final ArrayList<String> followingChannels;
+
 
     /**
      * Constructor.
@@ -32,8 +34,11 @@ public class UserProfile {
      * the country of the user
      * @param interests
      * the user's interests
+     * @param followingChannels
+     * The channels that have been followed.
      */
-    public UserProfile(String userId, String name, String email, String phone, String gender, int age, String country, ArrayList<String> interests) {
+    public UserProfile(String userId, String name, String email, String phone, String gender, int age, String country, ArrayList<String> interests, ArrayList<String> followingChannels) {
+
         this.userId = userId;
         this.email = email;
         this.phone = phone;
@@ -42,6 +47,7 @@ public class UserProfile {
         this.country = country;
         this.interests = interests;
         this.name = name;
+        this.followingChannels = followingChannels;
     }
 
     public String getUserId() {
@@ -74,5 +80,9 @@ public class UserProfile {
 
     public ArrayList<String> getInterests() {
         return interests;
+    }
+
+    public ArrayList<String> getFollowingChannels() {
+        return followingChannels;
     }
 }

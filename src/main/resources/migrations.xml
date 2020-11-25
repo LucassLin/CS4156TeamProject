@@ -14,7 +14,10 @@
             <column name="email" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="channelID" type="varchar(255)"/>
+            <column name="channelID" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+        <addUniqueConstraint tableName="LikeRecord" columnNames="email, channelID"/>
     </changeSet>
 </databaseChangeLog>

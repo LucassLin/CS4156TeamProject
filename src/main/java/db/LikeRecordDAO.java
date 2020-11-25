@@ -1,15 +1,16 @@
 package db;
 
-import models.LikeRecord;
 import io.dropwizard.hibernate.AbstractDAO;
-
+import models.LikeRecord;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
 
+
 public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
+    
     /**
      * Call parent constructor.
      */
@@ -38,5 +39,12 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
     public List<LikeRecord> findAll(String email) {
         return list((Query<LikeRecord>) namedQuery("models.findAllLikes").
                 setParameter("userEmail", email));
+    }
+
+    public int deleteRecord(String email, String channelID) {
+        Query query = namedQuery("models.deleteLikeRecord").
+                setParameter("userEmail", email).
+                setParameter("influencerChannelID", channelID);
+        return query.executeUpdate();
     }
 }

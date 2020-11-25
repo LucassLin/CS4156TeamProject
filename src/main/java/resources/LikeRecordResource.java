@@ -5,13 +5,18 @@ import io.dropwizard.hibernate.UnitOfWork;
 import models.LikeRecord;
 
 import javax.validation.Valid;
-import javax.ws.rs.*;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+
 
 @Path("/LikeRecord")
 @Produces(MediaType.APPLICATION_JSON)
 public class LikeRecordResource {
+
     private final LikeRecordDAO likeRecordDAO;
 
     /**
@@ -30,21 +35,38 @@ public class LikeRecordResource {
         return likeRecordDAO.create(record);
     }
 
-    @GET
+    @POST
     @UnitOfWork
+    @Path("/addRecord/{email}/{channelId}")
+    public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+        LikeRecord record = new LikeRecord(email, channelId);
+        List<LikeRecord> allLikes = listLikes(email);
+        boolean duplicate = false;
+        for (LikeRecord records : allLikes) {
+            if (records.getChannelID().equals(channelId) && records.getEmail().equals(email)) {
+                duplicate = true;
+                break;
+            }
+        }
+        if (!duplicate) createLikeRecord(record);
+/*        for (LikeRecord r : allLikes) {
+            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+        }*/
+    }
+
     public List<LikeRecord> listLikes(String email) {
         return likeRecordDAO.findAll(email);
     }
 
     @POST
     @UnitOfWork
-    @Path("/{email}/{channelId}")
-    public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
-        LikeRecord record = new LikeRecord(email, channelId);
-        createLikeRecord(record);
-        System.out.println(email + " -> " + channelId);
+    @Path("deleteRecord/{email}/{channelId}")
+    public void deleteLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+        System.out.println("record to be deleted: " + email + " -> " + channelId);
+        int deleteStatus = likeRecordDAO.deleteRecord(email, channelId);
+        System.out.println("#entry deleted: " + deleteStatus);
         List<LikeRecord> allLikes = listLikes(email);
-        for(LikeRecord r : allLikes){
+        for (LikeRecord r : allLikes) {
             System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
         }
     }
