@@ -34,6 +34,7 @@ public class Search {
     
     /**
      * Constructor.
+     *
      * @param channelID
      * the id of the channel
      */
