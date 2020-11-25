@@ -131,6 +131,21 @@
             letter-spacing: 1px;
             opacity: 0.8;
         }
+
+        .first{
+             width:70%;
+             height:300px;
+             position:absolute;
+             border:1px solid red;
+         }
+        .second{
+            border:2px solid blue;
+            width:40%;
+            height:200px;
+        	position: relative;
+            top: 315px;
+        }
+
     </style>
 
     <script>
@@ -149,6 +164,8 @@
 </head>
 
 <body translate="no">
+<#assign followingLink = "${userProfile.email}/following">
+<a href=${followingLink} class="info">Following</a>
 <h1 class="snip1336">Welcome ${userProfile.name}!</h1>
 <br>
 <#list influencers as influencer>

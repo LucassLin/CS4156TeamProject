@@ -20,12 +20,7 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
     }
 
     public LikeRecord create(LikeRecord record) {
-//        try{
-            return persist(record);
-//        } catch (ConstraintViolationException ex){
-//            System.err.println("Violates Unique Constraint......");
-//        }
-//        return null;
+        return persist(record);
     }
 
     @SuppressWarnings("unchecked")

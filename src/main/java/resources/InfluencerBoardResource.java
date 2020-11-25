@@ -11,10 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import tasks.GetChannelAnalyticsTask;
 import tasks.Search;
+import views.FollowingView;
 import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
-import resources.LikeRecordResource;
+import views.FollowingView;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ResourceContext;
@@ -66,6 +67,23 @@ public class InfluencerBoardResource {
         }
 
         return new UserHomeView(user, influencers);
+    }
+
+    @Path("/home/{name}/{email}/following")
+    @Timed
+    @UnitOfWork
+    @GET
+    public FollowingView getFollowing(@PathParam("name") String name, @PathParam("email") String email,
+                                       final @Context ResourceContext resourceContext) throws IOException {
+        final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
+        List<LikeRecord> records = resource.listLikes("lincclucas@gmail.com");
+        ArrayList<String> following = new ArrayList<>();
+        for(LikeRecord r : records){
+            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+            Search search = new Search(r.getChannelID());
+            following.add(search.getInfluencerProfileByID().getChannelName());
+        }
+        return new FollowingView(following);
     }
 
 //    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
