@@ -14,6 +14,11 @@ import java.util.List;
 public class LikeRecordResource {
     private final LikeRecordDAO likeRecordDAO;
 
+    /**
+     * Constructor.
+     * @param likeRecordDAO
+     * LikeRecordDAO
+     */
     public LikeRecordResource(LikeRecordDAO likeRecordDAO) {
         this.likeRecordDAO = likeRecordDAO;
     }
