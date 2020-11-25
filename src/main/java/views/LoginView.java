@@ -8,6 +8,7 @@ public class LoginView extends View {
 
     /**
      * Constructor.
+     *
      * @param welcomeWords
      * log in String
      */
