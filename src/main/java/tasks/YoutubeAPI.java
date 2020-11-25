@@ -31,7 +31,13 @@ public class YoutubeAPI {
     private static final String APPLICATION_NAME = "API code samples";
 
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
+    
+    /**
+     * Constructor.
+     *
+     * @param channelID
+     * the id of the channel
+     */
     public YoutubeAPI(String channelID) {
         this.channelID = channelID;
     }

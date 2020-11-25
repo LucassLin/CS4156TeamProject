@@ -29,7 +29,15 @@ public class LikeRecord {
 
     public LikeRecord() {
     }
-
+        
+    /**
+     * Constructor.
+     *
+     * @param email
+     * the user's email
+     * @param channelID
+     * the id of the channel
+     */
     public LikeRecord(String email, String channelID) {
         this.email = email;
         this.channelID = channelID;

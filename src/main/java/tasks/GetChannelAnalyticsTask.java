@@ -9,7 +9,13 @@ import java.util.ArrayList;
 public class GetChannelAnalyticsTask {
 
     private final String srcFile;
-
+    
+    /**
+     * Constructor.
+     *
+     * @param srcFile
+     * the source file
+     */
     public GetChannelAnalyticsTask(String srcFile) {
         this.srcFile = srcFile;
     }

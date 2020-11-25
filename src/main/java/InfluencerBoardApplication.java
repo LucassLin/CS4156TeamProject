@@ -32,6 +32,9 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
         return "hello world";
     }
 
+    /**
+     * Initialize the bootstrap.
+     */
     @Override
     public void initialize(Bootstrap<InfluencerBoardConfiguration> bootstrap) {
         bootstrap.addBundle(new ViewBundle<InfluencerBoardConfiguration>() {

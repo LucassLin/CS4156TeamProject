@@ -11,6 +11,14 @@ public class UserHomeView extends View {
     private final UserProfile userProfile;
     private final ArrayList<InfluencerProfile> influencers;
 
+    /**
+     * Constructor.
+     *
+     * @param userProfile
+     * the profile of the user
+     * @param influencers
+     * the list of influencers
+     */
     public UserHomeView(UserProfile userProfile, ArrayList<InfluencerProfile> influencers) {
         super("user_home.ftl");
         this.userProfile = userProfile;
