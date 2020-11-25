@@ -31,7 +31,12 @@ public class Search {
     private final String apiKey = "AIzaSyAccsqGaUxwL9ht-arv7om2_RKQpXT_f70";
 
     private final String channelID;
-
+    
+    /**
+     * Constructor.
+     * @param channelID
+     * the id of the channel
+     */
     public Search(String channelID) {
         this.channelID = channelID;
     }
