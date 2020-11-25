@@ -35,7 +35,10 @@ public class LikeRecord {
 
     public LikeRecord() {
     }
-
+        
+    /**
+     * Constructor
+     */
     public LikeRecord(String email, String channelID) {
         this.email = email;
         this.channelID = channelID;
