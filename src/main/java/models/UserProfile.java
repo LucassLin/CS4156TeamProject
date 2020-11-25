@@ -13,6 +13,25 @@ public class UserProfile {
     private final String country;
     private final ArrayList<String> interests;
 
+    /**
+     * Constructor.
+     * @param userId
+     * the id of the user
+     * @param name
+     * the user's name
+     * @param email
+     * the user's email
+     * @param phone
+     * the user's phone number
+     * @param gender
+     * the user's gender
+     * @param age
+     * the user's age
+     * @param country
+     * the country of the user
+     * @param interests
+     * the user's interests
+     */
     public UserProfile(String userId, String name, String email, String phone, String gender, int age, String country, ArrayList<String> interests) {
         this.userId = userId;
         this.email = email;
