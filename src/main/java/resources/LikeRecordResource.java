@@ -16,6 +16,7 @@ public class LikeRecordResource {
 
     /**
      * Constructor.
+     *
      * @param likeRecordDAO
      * LikeRecordDAO
      */
