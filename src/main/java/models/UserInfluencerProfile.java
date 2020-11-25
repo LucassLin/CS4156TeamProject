@@ -19,6 +19,7 @@ public class UserInfluencerProfile {
 
     /**
      * Constructor.
+     *
      * @param user
      * UserProfile.
      * @param influencer
