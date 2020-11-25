@@ -17,6 +17,13 @@ public class UserInfluencerProfile {
     protected final ArrayList<String> comments;
     protected Optional<Integer> rating;
 
+    /**
+     * Constructor.
+     * @param user
+     * UserProfile.
+     * @param influencer
+     * InfluencerProfile.
+     */
     public UserInfluencerProfile(UserProfile user, InfluencerProfile influencer) {
         this.user = user;
         this.influencer = influencer;
