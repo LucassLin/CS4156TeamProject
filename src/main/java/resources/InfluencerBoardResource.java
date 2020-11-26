@@ -49,7 +49,7 @@ public class InfluencerBoardResource {
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
                                        final @Context ResourceContext resourceContext) throws IOException {
         GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
-        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
+        ArrayList<InfluencerProfile> influencers = task.getInfluencers(10);
         ArrayList<String> interests = new ArrayList<>();
         ArrayList<String> followingChannels = new ArrayList<>();
         final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
@@ -80,7 +80,17 @@ public class InfluencerBoardResource {
             Search search = new Search(r.getChannelID());
             following.add(search.getInfluencerProfileByID().getChannelName());
         }
-        return new FollowingView(following);
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("music");
+        interests.add("movie");
+        ArrayList<String> followingChannels = new ArrayList<>();
+        for(LikeRecord r : records){
+            //System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+            Search search = new Search(r.getChannelID());
+            followingChannels.add(search.getInfluencerProfileByID().getChannelId());
+        }
+        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
+        return new FollowingView(following, user);
     }
 
 //    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")

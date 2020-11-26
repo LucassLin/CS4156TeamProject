@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <CodeStyleChecker>
     <!-- set the "src" directory where the source codes are stored -->
-    <SourceDir>/Users/xuejing/Desktop/Fall 2020/software engineer/CS4156TeamProject/src</SourceDir>
+    <SourceDir>/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src</SourceDir>
     <!-- set the files to check -->
     <FileInclusion>
         src/main/java/models/InfluencerProfile.java
         src/main/java/models/UserInfluencerProfile.java
+        src/main/java/models/LikeRecord.java
         src/main/java/info/woody/api/intellij/plugin/csct/core/CodeStyleCheckRule.groovy
         src/main/java/info/woody/api/intellij/plugin/csct/core/CodeStyleCheckRuleExecutor.groovy
     </FileInclusion>

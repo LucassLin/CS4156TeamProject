@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="views.FollowingView" -->
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -79,8 +80,9 @@ ul li:hover {
 
 <ul>
   <#list following as people>
-    <li>${people}</li>
+    <li><a href="/home/{name}/{email}/{channelId}">${people}</a></li>
   </#list>
+  <li><a href="/home/${user.name}/${user.email}">Back to Home Page</a></li>
 </ul>
 
 
