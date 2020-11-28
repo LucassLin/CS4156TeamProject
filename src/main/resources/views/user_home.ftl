@@ -181,7 +181,7 @@
                     <br>
                 </#list>
             </p>
-            <#if userProfile.getFollowingChannels()?seq_contains(influencer.channelId)>
+            <#if followingChannelIds?seq_contains(influencer.channelId)>
                 <form method="post" action="/LikeRecord/deleteRecord/${userProfile.email}/${influencer.channelId}">
                     <input id="follow${influencer.channelId}" type="submit" value="Following" onclick="changeStatus(this.id)">
                 </form>

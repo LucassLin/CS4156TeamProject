@@ -79,8 +79,8 @@ ul li:hover {
   <h2>Following List</h2>
 
 <ul>
-  <#list following as people>
-    <li><a href="/home/{name}/{email}/{channelId}">${people}</a></li>
+  <#list user.getFollowingChannels() as channel>
+    <li><a href="/home/${user.name}/${user.email}/${channel.channelId}">${channel.channelName}</a></li>
   </#list>
   <li><a href="/home/${user.name}/${user.email}">Back to Home Page</a></li>
 </ul>

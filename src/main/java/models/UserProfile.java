@@ -12,7 +12,7 @@ public class UserProfile {
     private final int age;
     private final String country;
     private final ArrayList<String> interests;
-    private final ArrayList<String> followingChannels;
+    private final ArrayList<InfluencerProfile> followingChannels;
 
 
     /**
@@ -37,7 +37,7 @@ public class UserProfile {
      * @param followingChannels
      * The channels that have been followed.
      */
-    public UserProfile(String userId, String name, String email, String phone, String gender, int age, String country, ArrayList<String> interests, ArrayList<String> followingChannels) {
+    public UserProfile(String userId, String name, String email, String phone, String gender, int age, String country, ArrayList<String> interests, ArrayList<InfluencerProfile> followingChannels) {
 
         this.userId = userId;
         this.email = email;
@@ -82,7 +82,7 @@ public class UserProfile {
         return interests;
     }
 
-    public ArrayList<String> getFollowingChannels() {
+    public ArrayList<InfluencerProfile> getFollowingChannels() {
         return followingChannels;
     }
 }
