@@ -48,7 +48,7 @@ public class InfluencerBoardResource {
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
                                        final @Context ResourceContext resourceContext) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> influencers = task.getInfluencers(10);
         ArrayList<String> interests = new ArrayList<>();
         ArrayList<String> followingChannels = new ArrayList<>();
@@ -132,7 +132,7 @@ public class InfluencerBoardResource {
         Search search = new Search(channelId);
         ArrayList<String> links = search.getVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 3 && i < links.size(); ++i) {
             threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
             //System.out.println("link is " + threeLinks.get(i));
         }
