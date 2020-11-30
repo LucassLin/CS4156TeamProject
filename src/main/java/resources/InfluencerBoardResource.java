@@ -16,9 +16,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Path("")
@@ -50,8 +52,22 @@ public class InfluencerBoardResource {
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
                                        final @Context ResourceContext resourceContext) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
-        ArrayList<InfluencerProfile> influencers = task.getInfluencers(HOME_INFLUENCER_NUM);
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+        ArrayList<InfluencerProfile> pool = task.getInfluencers(300);
+        Collections.shuffle(pool);
+        ArrayList<InfluencerProfile> influencers = new ArrayList<>();
+        for(int i=0; i<HOME_INFLUENCER_NUM; ++i){
+            influencers.add(pool.get(i));
+        }
+//        Search searchId = new Search("");
+//        ArrayList<String> channelID = searchId.getRandomChannelID();
+//        System.out.println("Number of channel ID is " + channelID.size());
+//        ArrayList<InfluencerProfile> influencers = new ArrayList<>();
+//        for(String ID : channelID){
+//            Search curSearch = new Search(ID);
+//            influencers.add(curSearch.getInfluencerProfileByID());
+//        }
+
         ArrayList<String> interests = new ArrayList<>();
         ArrayList<InfluencerProfile> followingChannels = new ArrayList<>();
         final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
@@ -126,10 +142,10 @@ public class InfluencerBoardResource {
     public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException {
         Search search = new Search(channelId);
-        ArrayList<String> links = search.getVideoList();
+        ArrayList<String> links = search.getPopularVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
         System.out.println("Total of " + links.size() + " videos are return for channel: " + channelId);
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 5 && i < links.size(); ++i) {
             threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
             //System.out.println("link is " + threeLinks.get(i));
         }

@@ -7,8 +7,10 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
 import models.InfluencerProfile;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -123,6 +125,93 @@ public class Search {
 //                System.out.println("video id is " + videoList.get(i));
 //            }
             return videoList;
+
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        ArrayList<String> empty = new ArrayList<>();
+        return empty;
+    }
+
+    public ArrayList<String> getRandomChannelID(){
+        try {
+            // This objecjat is used to make YouTube Data API requests. The last
+            // argument is required, but since we don't need anything
+            // initialized when the HttpRequest is initialized, we override
+            // the interface and provide a no-op function.
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
+                public void initialize(HttpRequest request) throws IOException {
+                }
+            }).setApplicationName("youtube-cmdline-search-sample").build();
+
+            // Prompt the user to enter a query term.
+
+            YouTube.Search.List request = youtube.search()
+                    .list("snippet");
+
+            request.setKey(apiKey);
+            SearchListResponse response = request.setMaxResults(100L)
+                    .setOrder("viewCount")
+                    .setType("channel")
+                    .execute();
+
+            ArrayList<String> channelID = new ArrayList<>();
+            for(SearchResult item : response.getItems()){
+                channelID.add(item.getId().getChannelId());
+            }
+            Collections.shuffle(channelID);
+
+            ArrayList<String> eightRandom = new ArrayList<>();
+            for(int i=0; i<8; ++i){
+                eightRandom.add(channelID.get(i));
+            }
+
+            return eightRandom;
+
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        ArrayList<String> empty = new ArrayList<>();
+        return empty;
+    }
+
+    public ArrayList<String> getPopularVideoList() {
+        // Read the developer key from the properties file.
+        try {
+            // This objecjat is used to make YouTube Data API requests. The last
+            // argument is required, but since we don't need anything
+            // initialized when the HttpRequest is initialized, we override
+            // the interface and provide a no-op function.
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
+                public void initialize(HttpRequest request) throws IOException {
+                }
+            }).setApplicationName("youtube-cmdline-search-sample").build();
+
+            ArrayList<String> videos = new ArrayList<>();
+
+            YouTube.Search.List request = youtube.search()
+                    .list("snippet");
+            request.setKey(apiKey);
+            SearchListResponse response = request.setMaxResults(25L)
+                    .setChannelId(this.channelID)
+                    .setOrder("viewCount")
+                    .setType("video")
+                    .execute();
+            List<SearchResult> items = response.getItems();
+            for(SearchResult res : items){
+                videos.add(res.getId().getVideoId());
+            }
+            return videos;
 
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
