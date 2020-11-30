@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Path("")
@@ -74,7 +75,12 @@ public class InfluencerBoardResource {
         }
         // get recommendations for the current user
         GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
-        ArrayList<InfluencerProfile> influencers = task.getInfluencers(HOME_INFLUENCER_NUM);
+        ArrayList<InfluencerProfile> pool = task.getInfluencers(300);
+        Collections.shuffle(pool);
+        ArrayList<InfluencerProfile> influencers = new ArrayList<>();
+        for(int i=0; i<HOME_INFLUENCER_NUM; ++i){
+            influencers.add(pool.get(i));
+        }
         ArrayList<String> interests = new ArrayList<>();
         ArrayList<InfluencerProfile> followingChannels = new ArrayList<>();
         final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
@@ -121,11 +127,9 @@ public class InfluencerBoardResource {
         ArrayList<String> links = search.getVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
         System.out.println("Total of " + links.size() + " videos are return for channel: " + channelId);
-        if (links.size() >= 3) {
-            for (int i = 0; i < 3; ++i) {
-                threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
-                //System.out.println("link is " + threeLinks.get(i));
-            }
+        for (int i = 0; i < 5 && i < links.size(); ++i) {
+            threeLinks.add("https://www.youtube.com/embed/" + links.get(i));
+            //System.out.println("link is " + threeLinks.get(i));
         }
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
         return new InfluencerProfileView(curInfluencer, threeLinks);
