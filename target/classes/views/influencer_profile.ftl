@@ -576,7 +576,7 @@ Enjoy the code <3
                 <a><span>2.1k</span> Posts</a>
                 <a><span>${influencerProfile.numOfSubscribers}</span> Subscribers</a>
                 <a>Following <span>388</span></a>
-                <a>CountryCode <span>${influencerProfile.countryCode}</span></a>
+                <a>CountryCode <span>${influencerProfile.countryCode!"None"}</span></a>
             </div>
             <div class="user-bio">
                 <p class="user-bio-name"></p>
