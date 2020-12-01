@@ -1,6 +1,7 @@
 package resources;
 
 import com.codahale.metrics.annotation.Timed;
+import db.InfluencerProfileDAO;
 import db.UserProfileDAO;
 import io.dropwizard.hibernate.UnitOfWork;
 import models.InfluencerProfile;
@@ -29,12 +30,14 @@ public class InfluencerBoardResource {
 
     private static int HOME_INFLUENCER_NUM = 11;
     private final UserProfileDAO userProfileDAO;
+    private final InfluencerProfileDAO influencerProfileDAO;
 
     @Context
     private ResourceContext rc;
 
-    public InfluencerBoardResource(UserProfileDAO userProfileDAO) {
+    public InfluencerBoardResource(UserProfileDAO userProfileDAO, InfluencerProfileDAO influencerProfileDAO) {
         this.userProfileDAO = userProfileDAO;
+        this.influencerProfileDAO = influencerProfileDAO;
     }
 
     @Path("/login")
@@ -124,7 +127,7 @@ public class InfluencerBoardResource {
     public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException {
         Search search = new Search(channelId);
-        ArrayList<String> links = search.getVideoList();
+        ArrayList<String> links = search.getPopularVideoList();
         ArrayList<String> threeLinks = new ArrayList<>();
         System.out.println("Total of " + links.size() + " videos are return for channel: " + channelId);
         for (int i = 0; i < 5 && i < links.size(); ++i) {

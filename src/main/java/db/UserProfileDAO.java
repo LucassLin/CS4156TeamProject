@@ -25,4 +25,8 @@ public class UserProfileDAO extends AbstractDAO<UserProfile> {
     public List<UserProfile> getAll() {
         return list((Query<UserProfile>) namedQuery("getAllUsers"));
     }
+
+/*    public int updateUser(UserProfile user) {
+
+    }*/
 }

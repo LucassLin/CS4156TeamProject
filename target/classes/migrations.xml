@@ -60,11 +60,45 @@
             </column>
         </addColumn>
     </changeSet>-->
-    <changeSet id="6" author="xuejing">
+<!--    <changeSet id="6" author="xuejing">
         <addColumn tableName="UserProfile">
             <column name="phone" type="varchar(256)">
                 <constraints nullable="true"></constraints>
             </column>
         </addColumn>
+    </changeSet>-->
+    <changeSet id="7" author="xuejing">
+        <createTable tableName="InfluencerProfile">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="channelId" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="channelName" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="countryCode" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="numOfSubscribers" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="averagePostViews" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="tags" type="varchar(265535)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="photoLink" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="description" type="varchar(265535)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

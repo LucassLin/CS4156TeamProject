@@ -14,6 +14,10 @@ import java.util.List;
                         name = "getAllUsers",
                         query = "SELECT l FROM UserProfile l"
                 )
+/*                @NamedQuery(
+                        name = "updateUser",
+                        query = "UPDATE UserProfile"
+                )*/
         })
 
 public class UserProfile {
