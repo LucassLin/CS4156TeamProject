@@ -21,7 +21,7 @@ public class YoutubeAPITest {
         assertEquals(threeLinks.get(2), "https://www.youtube.com/embed/1Qh39fXdauI");
     }
 
-    //@Test
+    @Test
     public void getInfluencerProfile() {
         Search search = new Search("UC_x5XG1OV2P6uZZ5FSM9Ttw");
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
