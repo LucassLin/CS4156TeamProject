@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+.name {
+  color: black;
+  font-size: 28px;
+  text-align: center;
+}
+
+.description {
+  color: grey;
+  font-size: 20px;
+}
+
+.age {
+  color: black;
+  font-size: 20px;
+}
+
+.gender {
+  color: black;
+  font-size: 20px;
+}
+
+.email {
+  color: black;
+  font-size: 20px;
+}
+
+.phone {
+  color: black;
+  font-size: 20px;
+}
+
+.country {
+  color: black;
+  font-size: 20px;
+}
+
+.interests{
+  color: black;
+  font-size: 20px;
+}
+
+.followingChannels{
+  color: black;
+  font-size: 20px;
+}
+
+button {
+  border: 2px white;
+  border-radius: 25%;
+  outline: 0;
+  display: inline-block;
+  padding: 2px;
+  color: white;
+  background-color: grey;
+  text-align: center;
+  cursor: pointer;
+  width: 60px;
+  height: 35px;
+  font-size: 15px;
+  justify-content: center;
+}
+
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+.tag-container {
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 6px;
+  overflow-x: scroll;
+}
+.tag-container .tag {
+  height: 30px;
+  margin: 5px;
+  padding: 5px 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  color: #333;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 1px 1px #fff;
+  cursor: default;
+}
+</style>
+</head>
+<body>
+
+
+<div class="profile">
+
+    <p class="name"> User Name</p>
+
+    <div class="flex-parent jc-center">
+        <button>EDIT</button>
+    </div>
+
+    <p class="description"> Introduction</p>
+    <p class="age"><i class="fa fa-hourglass-2 fa-fw w3-margin-right w3-large w3-text-teal"></i> age</p>
+    <p class="gender"><i class="fa fa-venus-mars fa-fw w3-margin-right w3-large w3-text-teal"></i> gender</p>
+    <p class="email"><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i> email </p>
+    <p class="phone"><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i> phone</p>
+    <p class="country"><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i> country</p>
+    <p class="interests"><i class="fa fa-heart fa-fw w3-margin-right w3-large w3-text-teal"></i> Interests</p>
+    <div class="tag-container">
+        <p class="tag">Interest 1</p>
+        <p class="tag">Interest 2</p>
+        <p class="tag">Interest 3</p>
+    </div>
+    <p class="followingChannels"><i class="fa fa-youtube fa-fw w3-margin-right w3-large w3-text-teal"></i> Following Channels</p>
+    <div class="tag-container">
+        <p class="tag">Channel 1</p>
+        <p class="tag">Channel 2</p>
+        <p class="tag">Channel 3</p>
+        <p class="tag">Channel 4</p>
+        <p class="tag">Channel 5</p>
+        <p class="tag">Channel 6</p>
+        <p class="tag">Channel 7</p>
+        <p class="tag">Channel 8</p>
+        <p class="tag">Channel 9</p>
+    </div>
+
+</div>
+
+</body>
+</html>

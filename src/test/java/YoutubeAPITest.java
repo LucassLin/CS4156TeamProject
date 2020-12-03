@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class YoutubeAPITest {
 
-    //@Test
+    @Test
     public void getVideos() {
         Search search = new Search("UC_x5XG1OV2P6uZZ5FSM9Ttw");
         ArrayList<String> links = search.getVideoList();

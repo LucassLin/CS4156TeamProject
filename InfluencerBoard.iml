@@ -23,6 +23,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-jersey:2.0.15" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.jersey.ext:jersey-metainf-services:2.32" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.jersey.inject:jersey-hk2:2.32" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.hk2:hk2-locator:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-jersey2:4.1.14" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-api:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-utils:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:aopalliance-repackaged:2.6.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet:2.32" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet-core:2.32" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-continuation:9.4.33.v20201020" level="project" />
+    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.10.17" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-core:2.0.15" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-util:2.0.15" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-jackson:2.0.15" level="project" />
