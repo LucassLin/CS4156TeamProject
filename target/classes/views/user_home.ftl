@@ -132,18 +132,27 @@
             opacity: 0.8;
         }
 
-        .first{
-             width:70%;
-             height:300px;
-             position:absolute;
-             border:1px solid red;
-         }
-        .second{
-            border:2px solid blue;
-            width:40%;
-            height:200px;
-        	position: relative;
+        .first {
+            width: 70%;
+            height: 300px;
+            position: absolute;
+            border: 1px solid red;
+        }
+
+        .second {
+            border: 2px solid blue;
+            width: 40%;
+            height: 200px;
+            position: relative;
             top: 315px;
+        }
+
+        .welcome {
+            padding: 60px;
+            text-align: center;
+            /*background: #1f2029;*/
+            color: white;
+            font-size: 30px;
         }
 
     </style>
@@ -164,10 +173,23 @@
 </head>
 
 <body translate="no">
-<#assign followingLink = "${userProfile.email}/following">
-<a href=${followingLink} class="info">Following</a>
-<h1 class="snip1336">Welcome ${userProfile.name}!</h1>
-<br>
+
+<#--<h1 class="welcome">Welcome ${userProfile.name}!</h1>
+<#assign followingLink = "${userProfile.email}/profile">
+<a href=${followingLink} class="info">My Profile</a>-->
+<figure class="snip1336">
+    <figcaption>
+        <h2>Welcome ${userProfile.name}! <span>${userProfile.followingChannels?size} subscriptions</span></h2>
+        <p>
+            <#list userProfile.interests as interest>
+                ${interest}
+                <br>
+            </#list>
+        </p>
+        <#assign link = "${userProfile.email}/profile">
+        <a href=${link} class="info">My Profile</a>
+    </figcaption>
+</figure>
 <#list influencers as influencer>
     <figure class="snip1336">
         <img src=${influencer.photoLink} alt="sample87"/>
@@ -183,11 +205,13 @@
             </p>
             <#if followingChannelIds?seq_contains(influencer.channelId)>
                 <form method="post" action="/LikeRecord/deleteRecord/${userProfile.email}/${influencer.channelId}">
-                    <input id="follow${influencer.channelId}" type="submit" value="Following" onclick="changeStatus(this.id)">
+                    <input id="follow${influencer.channelId}" type="submit" value="Following"
+                           onclick="changeStatus(this.id)">
                 </form>
             <#else>
                 <form method="post" action="/LikeRecord/addRecord/${userProfile.email}/${influencer.channelId}">
-                    <input id="follow${influencer.channelId}" type="submit" value="Follow" onclick="changeStatus(this.id)">
+                    <input id="follow${influencer.channelId}" type="submit" value="Follow"
+                           onclick="changeStatus(this.id)">
                 </form>
             </#if>
             <#assign link = "${userProfile.email}/${influencer.channelId}">
@@ -195,6 +219,7 @@
         </figcaption>
     </figure>
 </#list>
+
 <script>
     function changeStatus(id) {
         var elem = document.getElementById(id);

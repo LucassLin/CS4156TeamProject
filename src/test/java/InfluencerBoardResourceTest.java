@@ -1,20 +1,16 @@
-import org.junit.Test;
 import resources.InfluencerBoardResource;
 import views.LoginView;
-import views.UserHomeView;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
 public class InfluencerBoardResourceTest {
 
-    //@Test
-    public void getWelcomeTest() {
-        InfluencerBoardResource resource = new InfluencerBoardResource();
-        LoginView loginView = resource.getWelcome();
-        assertEquals(loginView.getWelcomeWords(), "Welcome to InfluencerBoard");
-    }
+//    //@Test
+//    public void getWelcomeTest() {
+//        InfluencerBoardResource resource = new InfluencerBoardResource(userProfileDAO);
+//        LoginView loginView = resource.getWelcome();
+//        assertEquals(loginView.getWelcomeWords(), "Welcome to InfluencerBoard");
+//    }
 
 //    @Test
 //    public void getHomeForUserTest() throws IOException {

@@ -1,6 +1,8 @@
 package resources;
 
 import com.codahale.metrics.annotation.Timed;
+import db.InfluencerProfileDAO;
+import db.UserProfileDAO;
 import io.dropwizard.hibernate.UnitOfWork;
 import models.InfluencerProfile;
 import models.LikeRecord;
@@ -12,11 +14,11 @@ import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -26,18 +28,17 @@ import java.util.List;
 @Path("")
 public class InfluencerBoardResource {
 
-    private static int HOME_INFLUENCER_NUM = 12;
+    private static int HOME_INFLUENCER_NUM = 11;
+    private final UserProfileDAO userProfileDAO;
+    private final InfluencerProfileDAO influencerProfileDAO;
 
     @Context
     private ResourceContext rc;
 
-    @GET
-    @Path("/add")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void get(final @Context ResourceContext resourceContext) {
-        final LikeRecordResource calculatorResource = resourceContext.getResource(LikeRecordResource.class);
+    public InfluencerBoardResource(UserProfileDAO userProfileDAO, InfluencerProfileDAO influencerProfileDAO) {
+        this.userProfileDAO = userProfileDAO;
+        this.influencerProfileDAO = influencerProfileDAO;
     }
-
 
     @Path("/login")
     @Timed
@@ -46,28 +47,43 @@ public class InfluencerBoardResource {
         return new LoginView("Welcome to InfluencerBoard");
     }
 
+    @POST
+    @UnitOfWork
+    public UserProfile createUserProfile(@Valid UserProfile profile) {
+        return userProfileDAO.create(profile);
+    }
+
     @Path("/home/{name}/{email}")
     @Timed
     @UnitOfWork
     @GET
     public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
                                        final @Context ResourceContext resourceContext) throws IOException {
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
+        // first check if the user exists in our database
+        UserProfile user = new UserProfile(name, email);
+        List<UserProfile> users = userProfileDAO.getAll();
+        boolean existed = false;
+        System.out.println("All users in db: ");
+        for (UserProfile u : users) {
+            System.out.println(u.getName());
+            if(user.getName().equals(u.getName()) && user.getEmail().equals(u.getEmail())) {
+                existed = true;
+            }
+        }
+        System.out.println("Does the user already exist? " + existed);
+        // if new user, add to our database
+        if (!existed) {
+            userProfileDAO.create(user);
+            System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
+        }
+        // get recommendations for the current user
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
         ArrayList<InfluencerProfile> pool = task.getInfluencers(300);
         Collections.shuffle(pool);
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
         for(int i=0; i<HOME_INFLUENCER_NUM; ++i){
             influencers.add(pool.get(i));
         }
-//        Search searchId = new Search("");
-//        ArrayList<String> channelID = searchId.getRandomChannelID();
-//        System.out.println("Number of channel ID is " + channelID.size());
-//        ArrayList<InfluencerProfile> influencers = new ArrayList<>();
-//        for(String ID : channelID){
-//            Search curSearch = new Search(ID);
-//            influencers.add(curSearch.getInfluencerProfileByID());
-//        }
-
         ArrayList<String> interests = new ArrayList<>();
         ArrayList<InfluencerProfile> followingChannels = new ArrayList<>();
         final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
@@ -79,12 +95,12 @@ public class InfluencerBoardResource {
         }
         interests.add("music");
         interests.add("movie");
-        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
+        user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
 
         return new UserHomeView(user, influencers);
     }
 
-    @Path("/home/{name}/{email}/following")
+    @Path("/home/{name}/{email}/profile")
     @Timed
     @UnitOfWork
     @GET
@@ -105,37 +121,6 @@ public class InfluencerBoardResource {
         return new FollowingView(user);
     }
 
-//    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
-//    @GET
-//    public UserInfluencerProfileView getInfluencerForUser(@PathParam("name") String name, @PathParam("email") String email, @PathParam("channelId") String channelId, @PathParam("likeInfo") String likeInfo) throws IOException {
-//        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
-//        ArrayList<InfluencerProfile> influencers = task.getInfluencers(3);
-//        ArrayList<String> interests = new ArrayList<>();
-//        interests.add("music");
-//        interests.add("movie");
-//        UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests);
-//        InfluencerProfile currInfluencer = null;
-//        for (InfluencerProfile i : influencers) {
-//            if (i.getChannelId().equals(channelId)){
-//                currInfluencer = i;
-//            }
-//        }
-//        UserInfluencerProfile userInfluencerProfile = new UserInfluencerProfile(user, currInfluencer);
-//        userInfluencerProfile.setLiked(likeInfo);
-////        InfluencerProfile influencer = new InfluencerProfile(
-////                influencers.get(0).getChannelId(), "", "", "0000000000", "female",
-////                "", tags, influencers.get(0).getPhotoLink());
-////        InfluencerProfile influencer = influencers.get(0);
-////        System.out.println("This is the link " + influencer.getPhotoLink());
-//
-//        return new UserInfluencerProfileView(userInfluencerProfile);
-//    }
-
-//    @Path("/home/{name}/{email}/{channelId}/{likeInfo}")
-//    @POST
-//    public void sendUserLikeInfo(@PathParam("likeInfo") boolean likeInfo) {
-//        // do something
-//    }
 
     @Path("/home/{name}/{email}/{channelId}")
     @GET
@@ -152,12 +137,5 @@ public class InfluencerBoardResource {
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
         return new InfluencerProfileView(curInfluencer, threeLinks);
     }
-
-//    @POST
-//    @Path("/home/{name}/{email}/{channelId}/likeMe")
-//    public void getLikeInfo(@PathParam("channelId") String channelId, @PathParam("email") String email) {
-//        LikeRecord record = new LikeRecord(email, channelId);
-//        System.out.println(email + " -> " + channelId);
-//    }
 
 }

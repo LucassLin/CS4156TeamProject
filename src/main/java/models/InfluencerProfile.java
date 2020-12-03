@@ -5,18 +5,42 @@
  */
 package models;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 
-public class InfluencerProfile {
+@Entity
+@Table(name = "InfluencerProfile")
 
+public class InfluencerProfile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "channelId", nullable = false)
     protected final String channelId;
+
+    @Column(name = "channelName", nullable = false)
     protected final String channelName;
+
+    @Column(name = "type", nullable = false)
     protected final String type;
+
+    @Column(name = "countryCode", nullable = false)
     protected final String countryCode;
+
+    @Column(name = "numOfSubscribers", nullable = false)
     protected final String numOfSubscribers;
+
+    @Column(name = "averagePostViews", nullable = false)
     protected final String averagePostViews;
-    protected final ArrayList<String> tags;
+
+    @Column(name = "tags", nullable = false)
+    protected final String tags;
+
+    @Column(name = "photoLink", nullable = false)
     protected final String photoLink;
+
+    @Column(name = "description", nullable = false)
     protected final String description;
 
     /**
@@ -49,7 +73,12 @@ public class InfluencerProfile {
         this.numOfSubscribers = numOfSubscribers;
         this.averagePostViews = averagePostViews;
         this.photoLink = photoLink;
-        this.tags = tags;
+        StringBuffer sb1 = new StringBuffer();
+        for (String s : tags) {
+            sb1.append(s);
+            sb1.append(",");
+        }
+        this.tags = sb1.toString();
         this.description = "No Description";
     }
 
@@ -85,7 +114,12 @@ public class InfluencerProfile {
         this.numOfSubscribers = numOfSubscribers;
         this.averagePostViews = averagePostViews;
         this.photoLink = photoLink;
-        this.tags = tags;
+        StringBuffer sb1 = new StringBuffer();
+        for (String s : tags) {
+            sb1.append(s);
+            sb1.append(",");
+        }
+        this.tags = sb1.toString();
         this.description = description;
     }
 
@@ -114,7 +148,12 @@ public class InfluencerProfile {
     }
 
     public ArrayList<String> getTags() {
-        return tags;
+        String str[] = tags.split(",");
+        ArrayList<String> tagsList = new ArrayList<>();
+        for (String s: str) {
+            tagsList.add(s);
+        }
+        return tagsList;
     }
 
     public String getChannelName() {
