@@ -17,13 +17,6 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
     public LikeRecordDAO(SessionFactory factory) {
         super(factory);
     }
-    
-    /**
-     * Change the like record by id. 
-     */
-    public Optional<LikeRecord> findById(Long id) {
-        return Optional.ofNullable(get(id));
-    }
 
     /**
      * Create one like record. 

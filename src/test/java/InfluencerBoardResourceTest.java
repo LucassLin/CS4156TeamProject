@@ -90,6 +90,7 @@ public class InfluencerBoardResourceTest {
         resource.addLikeRecord(null, email);
         List<LikeRecord> list = new ArrayList<>();
         when(likeRecordDAO.findAll(email)).thenReturn(list);
+        assertEquals(list, resource.findLikeRecordByEmail(email));
     }
 
     @Test
