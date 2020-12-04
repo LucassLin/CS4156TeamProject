@@ -46,33 +46,4 @@ public class Auth {
      * @param scopes              list of scopes needed to run youtube upload.
      * @param credentialDatastore name of the credential datastore to cache OAuth tokens
      */
-    public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException {
-
-        // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/client_secret.json"), StandardCharsets.UTF_8);
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
-
-        // Checks that the defaults have been replaced (Default = "Enter X here").
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
-                    "Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
-                            + "into src/main/resources/client_secrets.json");
-            System.exit(1);
-        }
-
-        // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
-        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
-        DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
-
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialDataStore(datastore)
-                .build();
-
-        // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8000).build();
-
-        // Authorize.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
-    }
 }

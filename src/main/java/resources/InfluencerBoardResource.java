@@ -78,9 +78,6 @@ public class InfluencerBoardResource {
         int deleteStatus = likeRecordDAO.deleteRecord(email, channelId);
         System.out.println("#entry deleted: " + deleteStatus);
         List<LikeRecord> allLikes = likeRecordDAO.findAll(email);
-        for (LikeRecord r : allLikes) {
-            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
-        }
     }
 
     @Path("/login")
@@ -117,7 +114,7 @@ public class InfluencerBoardResource {
             System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
         }
         // get recommendations for the current user
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/chucheng/Desktop/CS4156/TeamProject/CS4156TeamProject/channelAnalytics.csv");
         ArrayList<InfluencerProfile> pool = task.getInfluencers(300);
         Collections.shuffle(pool);
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
