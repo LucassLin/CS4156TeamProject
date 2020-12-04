@@ -41,10 +41,6 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
                 setParameter("userEmail", email));
     }
 
-    public List<LikeRecord> findEverything() {
-        return list((Query<LikeRecord>) namedQuery("models.findEverything"));
-    }
-
     public int deleteRecord(String email, String channelID) {
         Query query = namedQuery("models.deleteLikeRecord").
                 setParameter("userEmail", email).
