@@ -1,0 +1,22 @@
+<html><body><pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"&gt;
+
+    &lt;changeSet id="1" author="codahale"&gt;
+        &lt;createTable tableName="LikeRecord"&gt;
+            &lt;column name="id" type="bigint" autoIncrement="true"&gt;
+                &lt;constraints primaryKey="true" nullable="false"/&gt;
+            &lt;/column&gt;
+            &lt;column name="email" type="varchar(255)"&gt;
+                &lt;constraints nullable="false"/&gt;
+            &lt;/column&gt;
+            &lt;column name="channelID" type="varchar(255)"/&gt;
+        &lt;/createTable&gt;
+    &lt;/changeSet&gt;
+&lt;/databaseChangeLog&gt;
+</pre></body></html>

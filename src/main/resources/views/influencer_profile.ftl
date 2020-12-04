@@ -576,7 +576,7 @@ Enjoy the code <3
                 <a><span>2.1k</span> Posts</a>
                 <a><span>${influencerProfile.numOfSubscribers}</span> Subscribers</a>
                 <a>Following <span>388</span></a>
-                <a>CountryCode <span>${influencerProfile.countryCode}</span></a>
+                <a>CountryCode <span>${influencerProfile.countryCode!"None"}</span></a>
             </div>
             <div class="user-bio">
                 <p class="user-bio-name"></p>
@@ -635,10 +635,12 @@ Enjoy the code <3
     </div>
 </div>
 
+<p align="center">
 <#list videoLinks as videolink>
     <iframe width="460" height="315" src=${videolink}>
     </iframe>
 </#list>
+</p>
 
 <div class="space"></div>
 <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>

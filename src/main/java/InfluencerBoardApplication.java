@@ -1,7 +1,14 @@
+import db.LikeRecordDAO;
+import db.UserProfileDAO;
 import io.dropwizard.Application;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import models.LikeRecord;
+import models.UserProfile;
 import resources.InfluencerBoardResource;
 
 import java.util.Map;
@@ -12,11 +19,17 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
         new InfluencerBoardApplication().run(args);
     }
 
-    @Override
-    public String getName() {
-        return "hello world";
-    }
+    private final HibernateBundle<InfluencerBoardConfiguration> hibernateBundle =
+            new HibernateBundle<InfluencerBoardConfiguration>(LikeRecord.class, UserProfile.class) {
+                @Override
+                public DataSourceFactory getDataSourceFactory(InfluencerBoardConfiguration configuration) {
+                    return configuration.getDataSourceFactory();
+                }
+            };
 
+    /**
+     * Initialize the bootstrap.
+     */
     @Override
     public void initialize(Bootstrap<InfluencerBoardConfiguration> bootstrap) {
         bootstrap.addBundle(new ViewBundle<InfluencerBoardConfiguration>() {
@@ -25,11 +38,19 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
                 return config.getViewRendererConfiguration();
             }
         });
+        bootstrap.addBundle(new MigrationsBundle<InfluencerBoardConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory(InfluencerBoardConfiguration configuration) {
+                return configuration.getDataSourceFactory();
+            }
+        });
+        bootstrap.addBundle(hibernateBundle);
     }
 
     @Override
     public void run(InfluencerBoardConfiguration configuration, Environment environment) {
-        final InfluencerBoardResource resource = new InfluencerBoardResource();
-        environment.jersey().register(resource);
+        final LikeRecordDAO likeRecordDAO = new LikeRecordDAO(hibernateBundle.getSessionFactory());
+        final UserProfileDAO userProfileDAO = new UserProfileDAO(hibernateBundle.getSessionFactory());
+        environment.jersey().register(new InfluencerBoardResource(userProfileDAO, likeRecordDAO));
     }
 }
