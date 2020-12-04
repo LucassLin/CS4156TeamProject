@@ -58,7 +58,11 @@ public class Search {
             InfluencerProfile influencerProfile;
             ArrayList<String> tags = new ArrayList<>();
             if(response.getPageInfo().getTotalResults() == 0){
-                throw new IOException("No Such Channel ID");
+                ArrayList<String> dummyTags = new ArrayList<>();
+                InfluencerProfile dummy = new InfluencerProfile("N/A", "N/A",
+                        "N/A", "N/A", "N/A", "N/A", dummyTags,
+                        "N/A");
+                return dummy;
             }
             Channel item = response.getItems().get(0);
             ChannelSnippet snippet = item.getSnippet();
@@ -73,9 +77,7 @@ public class Search {
         } catch (Throwable t) {
             t.printStackTrace();
             ArrayList<String> dummyTags = new ArrayList<>();
-            InfluencerProfile dummy = new InfluencerProfile("N/A", "N/A",
-                    "N/A", "N/A", "N/A", "N/A", dummyTags,
-                    "N/A");
+            InfluencerProfile dummy = new InfluencerProfile("N/A", "N/A", "N/A", "N/A", "N/A", "N/A", dummyTags, "N/A");
             return dummy;
         }
     }
