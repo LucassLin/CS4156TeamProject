@@ -3,7 +3,6 @@ import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -13,9 +12,7 @@ import models.InfluencerProfile;
 import models.LikeRecord;
 import models.UserProfile;
 import resources.InfluencerBoardResource;
-import resources.LikeRecordResource;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Map;
 
 public class InfluencerBoardApplication extends Application<InfluencerBoardConfiguration> {
@@ -31,11 +28,6 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
                     return configuration.getDataSourceFactory();
                 }
             };
-
-    @Override
-    public String getName() {
-        return "hello world";
-    }
 
     /**
      * Initialize the bootstrap.
@@ -60,9 +52,8 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
     @Override
     public void run(InfluencerBoardConfiguration configuration, Environment environment) {
         final LikeRecordDAO likeRecordDAO = new LikeRecordDAO(hibernateBundle.getSessionFactory());
-        environment.jersey().register(new LikeRecordResource(likeRecordDAO));
         final UserProfileDAO userProfileDAO = new UserProfileDAO(hibernateBundle.getSessionFactory());
         final InfluencerProfileDAO influencerProfileDAO = new InfluencerProfileDAO(hibernateBundle.getSessionFactory());
-        environment.jersey().register(new InfluencerBoardResource(userProfileDAO, influencerProfileDAO));
+        environment.jersey().register(new InfluencerBoardResource(userProfileDAO, influencerProfileDAO, likeRecordDAO));
     }
 }

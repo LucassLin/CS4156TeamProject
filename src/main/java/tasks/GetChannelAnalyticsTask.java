@@ -27,6 +27,9 @@ public class GetChannelAnalyticsTask {
      */
     public ArrayList<InfluencerProfile> getInfluencers(int num) throws IOException {
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
+        if (num < 0) {
+            return influencers;
+        }
         try {
             InputStream inputStream = new FileInputStream(srcFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));

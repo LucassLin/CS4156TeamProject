@@ -13,6 +13,10 @@ import javax.persistence.*;
                 @NamedQuery(
                         name = "models.deleteLikeRecord",
                         query = "DELETE FROM LikeRecord l WHERE l.email =:userEmail AND l.channelID =:influencerChannelID"
+                ),
+                @NamedQuery(
+                        name = "models.findEverything",
+                        query = "SELECT l FROM LikeRecord l"
                 )
         })
 

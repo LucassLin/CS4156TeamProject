@@ -1,32 +1,103 @@
+import db.InfluencerProfileDAO;
+import db.LikeRecordDAO;
+import db.UserProfileDAO;
+import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
+import io.dropwizard.testing.junit5.ResourceExtension;
+import models.LikeRecord;
+import models.UserProfile;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import resources.InfluencerBoardResource;
-import views.LoginView;
+import views.UserHomeView;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for {@link InfluencerBoardResource}.
+ */
+@ExtendWith(DropwizardExtensionsSupport.class)
 public class InfluencerBoardResourceTest {
 
-//    //@Test
-//    public void getWelcomeTest() {
-//        InfluencerBoardResource resource = new InfluencerBoardResource(userProfileDAO);
-//        LoginView loginView = resource.getWelcome();
-//        assertEquals(loginView.getWelcomeWords(), "Welcome to InfluencerBoard");
-//    }
+    @Mock
+    private static UserProfileDAO userDAO;
+    @Mock
+    private static InfluencerProfileDAO influencerDAO;
+    @Mock
+    private static LikeRecordDAO likeRecordDAO;
 
-//    @Test
-//    public void getHomeForUserTest() throws IOException {
-//        InfluencerBoardResource resource = new InfluencerBoardResource();
-//        UserHomeView userHomeView = resource.getHomeForUser("April Wang", "wxuejing96@gmail.com");
-//        assertEquals(userHomeView.getUserProfile().getName(), "April Wang");
-//        assertEquals(userHomeView.getUserProfile().getEmail(), "wxuejing96@gmail.com");
-//    }
+    public static final ResourceExtension RULE = ResourceExtension.builder()
+            .addResource(new InfluencerBoardResource(userDAO, influencerDAO, likeRecordDAO))
+            .build();
 
+    @InjectMocks
+    private static InfluencerBoardResource resource;
 
-//    @Test
-//    public void getInfluencerForUserTest() throws IOException {
-//        InfluencerBoardResource resource = new InfluencerBoardResource();
-//        UserInfluencerProfileView userInfluencerProfileView = resource.getInfluencerForUser("April Wang", "wxuejing96@gmail.com", "blackpink", "Liked");
-//        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getUser().getName(), "April Wang");
-//        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getUser().getEmail(), "wxuejing96@gmail.com");
-//        assertEquals(userInfluencerProfileView.getUserInfluencerProfile().getLiked(), "Liked");
-//    }
+    @Before
+    public void setup(){
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeEach
+    public void renew() {
+        resource = new InfluencerBoardResource(userDAO, influencerDAO, likeRecordDAO);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        reset(userDAO);
+        reset(influencerDAO);
+        reset(likeRecordDAO);
+    }
+
+    @Test
+    public void getHomeForUserTestA() throws IOException {
+        resource = new InfluencerBoardResource(userDAO, influencerDAO, likeRecordDAO);
+        UserProfile user = new UserProfile("April", null);
+        UserHomeView view = resource.getHomeForUser(user.getName(), user.getEmail());
+        assertEquals(view, null);
+        reset(userDAO);
+        reset(influencerDAO);
+        reset(likeRecordDAO);
+    }
+
+    @Test
+    public void getHomeForUserTestB() {
+        UserProfile user = new UserProfile("April", "april@gmail.com");
+        try {
+            UserHomeView view = resource.getHomeForUser(user.getName(), user.getEmail());
+            assertEquals(view.getUserProfile().getName(), "April");
+            assertEquals(view.getUserProfile().getEmail(), "april@gmail.com");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void addLikeRecordTestA() {
+        String email = "april@gmail.com";
+        resource.addLikeRecord(null, email);
+        List<LikeRecord> list = new ArrayList<LikeRecord>();
+        when(likeRecordDAO.findAll(email)).thenReturn(list);
+    }
+
+    @Test
+    public void addLikeRecordTestB() {
+        String email = "april@gmail.com";
+        resource.addLikeRecord("1", email);
+        List<LikeRecord> list = new ArrayList<LikeRecord>();
+        LikeRecord lr = new LikeRecord(email, "1");
+        list.add(lr);
+        when(likeRecordDAO.findAll(email)).thenReturn(list);
+    }
 }

@@ -1,6 +1,7 @@
 package db;
 
 import io.dropwizard.hibernate.AbstractDAO;
+import io.dropwizard.hibernate.UnitOfWork;
 import models.UserProfile;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,11 +19,11 @@ public class UserProfileDAO extends AbstractDAO<UserProfile> {
      * @param profile
      * @return an UserProfile object being added to db
      */
-    public UserProfile create(UserProfile profile) {
+    public UserProfile createUser(UserProfile profile) {
         return persist(profile);
     }
 
-    public List<UserProfile> getAll() {
+    public List<UserProfile> getAllUsers() {
         return list((Query<UserProfile>) namedQuery("getAllUsers"));
     }
 

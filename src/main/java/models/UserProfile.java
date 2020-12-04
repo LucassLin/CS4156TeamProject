@@ -4,7 +4,7 @@ import tasks.Search;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "UserProfile")
@@ -87,12 +87,13 @@ public class UserProfile {
         this.followingChannels = sb2.toString();
     }
 
-    public UserProfile(String name, String email){
+    public UserProfile(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public UserProfile() { }
+    public UserProfile() {
+    }
 
     public String getUserId() {
         return userId;
@@ -125,7 +126,7 @@ public class UserProfile {
     public ArrayList<String> getInterests() {
         String str[] = interests.split(",");
         ArrayList<String> interestsList = new ArrayList<>();
-        for (String s: str) {
+        for (String s : str) {
             interestsList.add(s);
         }
         return interestsList;
@@ -133,13 +134,16 @@ public class UserProfile {
 
     public ArrayList<InfluencerProfile> getFollowingChannels() {
         String str[] = followingChannels.split(",");
+        ArrayList<String> channelIds = new ArrayList<String>(Arrays.asList(str));
         ArrayList<InfluencerProfile> followingChannelsList = new ArrayList<>();
         Search search;
         InfluencerProfile curInfluencer;
-        for (String s: str) {
-            search = new Search(s);
-            curInfluencer = search.getInfluencerProfileByID();
-            followingChannelsList.add(curInfluencer);
+        for (String id : channelIds) {
+            if (!id.equals("")) {
+                search = new Search(id);
+                curInfluencer = search.getInfluencerProfileByID();
+                followingChannelsList.add(curInfluencer);
+            }
         }
         return followingChannelsList;
     }

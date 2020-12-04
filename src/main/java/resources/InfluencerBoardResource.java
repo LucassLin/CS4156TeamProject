@@ -2,6 +2,7 @@ package resources;
 
 import com.codahale.metrics.annotation.Timed;
 import db.InfluencerProfileDAO;
+import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.hibernate.UnitOfWork;
 import models.InfluencerProfile;
@@ -14,11 +15,11 @@ import views.InfluencerProfileView;
 import views.LoginView;
 import views.UserHomeView;
 
-import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.container.ResourceContext;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -29,15 +30,56 @@ import java.util.List;
 public class InfluencerBoardResource {
 
     private static int HOME_INFLUENCER_NUM = 11;
+    @Inject
     private final UserProfileDAO userProfileDAO;
+    @Inject
     private final InfluencerProfileDAO influencerProfileDAO;
+    @Inject
+    private final LikeRecordDAO likeRecordDAO;
 
-    @Context
-    private ResourceContext rc;
-
-    public InfluencerBoardResource(UserProfileDAO userProfileDAO, InfluencerProfileDAO influencerProfileDAO) {
+    public InfluencerBoardResource(UserProfileDAO userProfileDAO, InfluencerProfileDAO influencerProfileDAO, LikeRecordDAO likeRecordDAO) {
         this.userProfileDAO = userProfileDAO;
         this.influencerProfileDAO = influencerProfileDAO;
+        this.likeRecordDAO = likeRecordDAO;
+    }
+
+    public List<LikeRecord> findLikeRecordByEmail(String email) {
+        return likeRecordDAO.findAll(email);
+    }
+
+    @POST
+    @UnitOfWork
+    @Path("/LikeRecord/addRecord/{email}/{channelId}")
+    public void addLikeRecord(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+        if (channelId == null || email == null) {
+            return;
+        }
+        LikeRecord record = new LikeRecord(email, channelId);
+        List<LikeRecord> allLikes = likeRecordDAO.findAll(email);
+        boolean duplicate = false;
+        for (LikeRecord records : allLikes) {
+            if (records.getChannelID().equals(channelId) && records.getEmail().equals(email)) {
+                duplicate = true;
+                break;
+            }
+        }
+        if (!duplicate) {
+            likeRecordDAO.create(record);
+            System.out.println("new like recorded added");
+        }
+    }
+
+    @POST
+    @UnitOfWork
+    @Path("/LikeRecord/deleteRecord/{email}/{channelId}")
+    public void deleteLikeRecord(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+        System.out.println("record to be deleted: " + email + " -> " + channelId);
+        int deleteStatus = likeRecordDAO.deleteRecord(email, channelId);
+        System.out.println("#entry deleted: " + deleteStatus);
+        List<LikeRecord> allLikes = likeRecordDAO.findAll(email);
+        for (LikeRecord r : allLikes) {
+            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+        }
     }
 
     @Path("/login")
@@ -47,33 +89,30 @@ public class InfluencerBoardResource {
         return new LoginView("Welcome to InfluencerBoard");
     }
 
-    @POST
-    @UnitOfWork
-    public UserProfile createUserProfile(@Valid UserProfile profile) {
-        return userProfileDAO.create(profile);
-    }
 
     @Path("/home/{name}/{email}")
     @Timed
     @UnitOfWork
     @GET
-    public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email,
-                                       final @Context ResourceContext resourceContext) throws IOException {
+    public UserHomeView getHomeForUser(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
+        if (name == null || email == null) {
+            return null;
+        }
         // first check if the user exists in our database
         UserProfile user = new UserProfile(name, email);
-        List<UserProfile> users = userProfileDAO.getAll();
+        List<UserProfile> users = userProfileDAO.getAllUsers();
         boolean existed = false;
         System.out.println("All users in db: ");
         for (UserProfile u : users) {
             System.out.println(u.getName());
-            if(user.getName().equals(u.getName()) && user.getEmail().equals(u.getEmail())) {
+            if (user.getName().equals(u.getName()) && user.getEmail().equals(u.getEmail())) {
                 existed = true;
             }
         }
         System.out.println("Does the user already exist? " + existed);
         // if new user, add to our database
         if (!existed) {
-            userProfileDAO.create(user);
+            userProfileDAO.createUser(user);
             System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
         }
         // get recommendations for the current user
@@ -81,17 +120,20 @@ public class InfluencerBoardResource {
         ArrayList<InfluencerProfile> pool = task.getInfluencers(300);
         Collections.shuffle(pool);
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
-        for(int i=0; i<HOME_INFLUENCER_NUM; ++i){
+        for (int i = 0; i < HOME_INFLUENCER_NUM; ++i) {
             influencers.add(pool.get(i));
         }
         ArrayList<String> interests = new ArrayList<>();
         ArrayList<InfluencerProfile> followingChannels = new ArrayList<>();
-        final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
-        List<LikeRecord> records = resource.listLikes(email);
-        for(LikeRecord r : records){
-            //System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
-            Search search = new Search(r.getChannelID());
-            followingChannels.add(search.getInfluencerProfileByID());
+        List<LikeRecord> records = likeRecordDAO.findAll(email);
+        System.out.println("all like records:");
+        System.out.println(records.size());
+        if (records.size() != 0) {
+            for (LikeRecord r : records) {
+                System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+                Search search = new Search(r.getChannelID());
+                followingChannels.add(search.getInfluencerProfileByID());
+            }
         }
         interests.add("music");
         interests.add("movie");
@@ -104,12 +146,10 @@ public class InfluencerBoardResource {
     @Timed
     @UnitOfWork
     @GET
-    public FollowingView getFollowing(@PathParam("name") String name, @PathParam("email") String email,
-                                       final @Context ResourceContext resourceContext) throws IOException {
-        final LikeRecordResource resource = resourceContext.getResource(LikeRecordResource.class);
-        List<LikeRecord> records = resource.listLikes(email);
+    public FollowingView getFollowing(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
+        List<LikeRecord> records = likeRecordDAO.findAll(email);
         ArrayList<InfluencerProfile> followingChannels = new ArrayList<>();
-        for(LikeRecord r : records){
+        for (LikeRecord r : records) {
             //System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
             Search search = new Search(r.getChannelID());
             followingChannels.add(search.getInfluencerProfileByID());
