@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import resources.InfluencerBoardResource;
 import views.FollowingView;
+import views.LoginView;
 import views.UserHomeView;
 
 import java.io.IOException;
@@ -63,13 +64,9 @@ public class InfluencerBoardResourceTest {
 
     @Test
     public void getHomeForUserTestA() throws IOException {
-        resource = new InfluencerBoardResource(userDAO, influencerDAO, likeRecordDAO);
         UserProfile user = new UserProfile("April", null);
         UserHomeView view = resource.getHomeForUser(user.getName(), user.getEmail());
         assertEquals(view, null);
-        reset(userDAO);
-        reset(influencerDAO);
-        reset(likeRecordDAO);
     }
 
     @Test
@@ -79,6 +76,9 @@ public class InfluencerBoardResourceTest {
             UserHomeView view = resource.getHomeForUser(user.getName(), user.getEmail());
             assertEquals(view.getUserProfile().getName(), "April");
             assertEquals(view.getUserProfile().getEmail(), "april@gmail.com");
+            assertEquals(view.getUserProfile().getInterests().size(), 2);
+            assertEquals(view.getInfluencers().size(), 11);
+            assertEquals(view.getFollowingChannelIds().size(), 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,6 +164,12 @@ public class InfluencerBoardResourceTest {
         FollowingView view = resource.getFollowing(name, email);
         assertEquals(name, view.getUser().getName());
         assertEquals(email, view.getUser().getEmail());
+    }
+
+    @Test
+    public void getWelcomeTest() {
+        LoginView view = resource.getWelcome();
+        assertEquals("Welcome to InfluencerBoard", view.getWelcomeWords());
     }
 
 }

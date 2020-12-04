@@ -1,11 +1,3 @@
-import models.InfluencerProfile;
-import resources.InfluencerBoardResource;
-import tasks.YoutubeAPI;
-import views.InfluencerProfileView;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 import static org.junit.Assert.assertEquals;
 
 public class InfluencerProfileTest {

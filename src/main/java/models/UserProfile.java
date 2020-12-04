@@ -92,12 +92,12 @@ public class UserProfile {
         this.email = email;
     }
 
-    public UserProfile() {
+/*    public UserProfile() {
     }
 
     public String getUserId() {
         return userId;
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -107,7 +107,7 @@ public class UserProfile {
         return email;
     }
 
-    public String getPhone() {
+/*    public String getPhone() {
         return phone;
     }
 
@@ -121,7 +121,7 @@ public class UserProfile {
 
     public String getCountry() {
         return country;
-    }
+    }*/
 
     public ArrayList<String> getInterests() {
         String str[] = interests.split(",");

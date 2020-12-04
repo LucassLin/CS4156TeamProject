@@ -127,9 +127,9 @@ public class InfluencerProfile {
         return channelId;
     }
 
-    public String getType() {
+/*    public String getType() {
         return type;
-    }
+    }*/
 
     public String getCountryCode() {
         return countryCode;

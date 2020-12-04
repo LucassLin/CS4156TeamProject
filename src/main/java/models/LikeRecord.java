@@ -29,41 +29,39 @@ public class LikeRecord {
 
     public LikeRecord() {
     }
-        
+
     /**
      * Constructor.
      *
-     * @param email
-     * the user's email
-     * @param channelID
-     * the id of the channel
+     * @param email     the user's email
+     * @param channelID the id of the channel
      */
     public LikeRecord(String email, String channelID) {
         this.email = email;
         this.channelID = channelID;
     }
 
-    public long getId() {
+/*    public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
+    }*/
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+/*    public void setEmail(String email) {
         this.email = email;
-    }
+    }*/
 
     public String getChannelID() {
         return channelID;
     }
 
-    public void setChannelID(String channelID) {
+/*    public void setChannelID(String channelID) {
         this.channelID = channelID;
-    }
+    }*/
 }
