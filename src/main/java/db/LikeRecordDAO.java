@@ -29,7 +29,7 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
      * Read all like records by the user's email. 
      */
     @SuppressWarnings("unchecked")
-    public List<LikeRecord> findAll(String email) {
+    public List<LikeRecord> findAll(String email){
         return list((Query<LikeRecord>) namedQuery("models.findAllLikes").
                 setParameter("userEmail", email));
     }
