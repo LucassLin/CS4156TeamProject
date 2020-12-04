@@ -3,6 +3,7 @@ import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
+import models.InfluencerProfile;
 import models.LikeRecord;
 import models.UserProfile;
 import org.junit.Before;
@@ -15,9 +16,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import resources.InfluencerBoardResource;
 import views.FollowingView;
+import views.InfluencerProfileView;
 import views.UserHomeView;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,4 +169,34 @@ public class InfluencerBoardResourceTest {
         assertEquals(email, view.getUser().getEmail());
     }
 
+    @Test
+    public void getInfluencerForUserTestA() throws IOException, GeneralSecurityException {
+        InfluencerProfileView view = resource.getInfluencerForUser("UCw8ZhLPdQ0u_Y-TLKd61hGA");
+        InfluencerProfile curInfluencer = view.getInfluencerProfile();
+        ArrayList<String> links = view.getVideoLinks();
+        assertEquals(curInfluencer.getChannelName(), "1MILLION Dance Studio");
+        assertEquals(curInfluencer.getPhotoLink(), "https://yt3.ggpht.com/ytc/AAUvwnh1e9ZrKP58etpfsjLmktO74CwuMQgYrNNf-ERvTg=s800-c-k-c0x00ffffff-no-rj");
+        assertEquals(curInfluencer.getChannelId(), "UCw8ZhLPdQ0u_Y-TLKd61hGA");
+        assertEquals(curInfluencer.getAveragePostViews(), "2300");
+        assertEquals(curInfluencer.getNumOfSubscribers(), "22700000");
+        assertEquals(curInfluencer.getCountryCode(), "KR");
+        assertEquals(links.get(0), "https://www.youtube.com/embed/SoXGx7FakyU");
+        assertEquals(links.get(1), "https://www.youtube.com/embed/Vaz_kpmTi0M");
+        assertEquals(links.get(2), "https://www.youtube.com/embed/OC6AFSZLtnk");
+        assertEquals(links.get(3), "https://www.youtube.com/embed/exppHlhjp9k");
+    }
+
+    @Test
+    public void getInfluencerForUserTestB() throws IOException, GeneralSecurityException {
+        InfluencerProfileView view = resource.getInfluencerForUser("？？？");
+        InfluencerProfile curInfluencer = view.getInfluencerProfile();
+        ArrayList<String> links = view.getVideoLinks();
+        assertEquals(curInfluencer.getChannelName(), "N/A");
+        assertEquals(curInfluencer.getPhotoLink(), "N/A");
+        assertEquals(curInfluencer.getChannelId(), "N/A");
+        assertEquals(curInfluencer.getAveragePostViews(), "N/A");
+        assertEquals(curInfluencer.getNumOfSubscribers(), "N/A");
+        assertEquals(curInfluencer.getCountryCode(), "N/A");
+        assertEquals(links.size(), 0);
+    }
 }
