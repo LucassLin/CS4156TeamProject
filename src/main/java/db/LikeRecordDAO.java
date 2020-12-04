@@ -6,11 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 
-public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
-    
+public class LikeRecordDAO extends AbstractDAO<LikeRecord> {
+
     /**
      * Call parent constructor.
      */
@@ -19,17 +18,17 @@ public class LikeRecordDAO extends AbstractDAO<LikeRecord>{
     }
 
     /**
-     * Create one like record. 
+     * Create one like record.
      */
     public LikeRecord create(LikeRecord record) {
         return persist(record);
     }
 
     /**
-     * Read all like records by the user's email. 
+     * Read all like records by the user's email.
      */
     @SuppressWarnings("unchecked")
-    public List<LikeRecord> findAll(String email){
+    public List<LikeRecord> findAll(String email) {
         return list((Query<LikeRecord>) namedQuery("models.findAllLikes").
                 setParameter("userEmail", email));
     }

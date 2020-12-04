@@ -35,7 +35,7 @@ public class UserProfile {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private String gender;
 
     @Column(name = "age")

@@ -1,7 +1,6 @@
 package db;
 
 import io.dropwizard.hibernate.AbstractDAO;
-import io.dropwizard.hibernate.UnitOfWork;
 import models.UserProfile;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,10 +15,14 @@ public class UserProfileDAO extends AbstractDAO<UserProfile> {
 
     /**
      * create a user profile entry in db
+     *
      * @param profile
      * @return an UserProfile object being added to db
      */
     public UserProfile createUser(UserProfile profile) {
+        if (profile.getEmail() == null || profile.getName() == null) {
+            return null;
+        }
         return persist(profile);
     }
 
@@ -27,7 +30,4 @@ public class UserProfileDAO extends AbstractDAO<UserProfile> {
         return list((Query<UserProfile>) namedQuery("getAllUsers"));
     }
 
-/*    public int updateUser(UserProfile user) {
-
-    }*/
 }
