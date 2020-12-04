@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import resources.InfluencerBoardResource;
+import views.FollowingView;
 import views.UserHomeView;
 
 import java.io.IOException;
@@ -87,7 +88,7 @@ public class InfluencerBoardResourceTest {
     public void addLikeRecordTestA() {
         String email = "april@gmail.com";
         resource.addLikeRecord(null, email);
-        List<LikeRecord> list = new ArrayList<LikeRecord>();
+        List<LikeRecord> list = new ArrayList<>();
         when(likeRecordDAO.findAll(email)).thenReturn(list);
     }
 
@@ -95,9 +96,73 @@ public class InfluencerBoardResourceTest {
     public void addLikeRecordTestB() {
         String email = "april@gmail.com";
         resource.addLikeRecord("1", email);
-        List<LikeRecord> list = new ArrayList<LikeRecord>();
+        List<LikeRecord> list = new ArrayList<>();
         LikeRecord lr = new LikeRecord(email, "1");
         list.add(lr);
         when(likeRecordDAO.findAll(email)).thenReturn(list);
     }
+
+    @Test
+    public void deleteLikeRecordTestA() {
+        String email = "april@gmail.com";
+        resource.addLikeRecord("1", email);
+        resource.deleteLikeRecord(null, email);
+        List<LikeRecord> list = new ArrayList<>();
+        LikeRecord lr = new LikeRecord(email, "1");
+        list.add(lr);
+        when(likeRecordDAO.findAll(email)).thenReturn(list);
+    }
+
+    @Test
+    public void deleteLikeRecordTestB() {
+        String email = "april@gmail.com";
+        resource.addLikeRecord("1", email);
+        resource.deleteLikeRecord("2", email);
+        List<LikeRecord> list = new ArrayList<>();
+        LikeRecord lr = new LikeRecord(email, "1");
+        list.add(lr);
+        when(likeRecordDAO.findAll(email)).thenReturn(list);
+    }
+
+    @Test
+    public void deleteLikeRecordTestC() {
+        String email = "april@gmail.com";
+        resource.addLikeRecord("1", email);
+        resource.addLikeRecord("2", email);
+        List<LikeRecord> list = new ArrayList<>();
+        LikeRecord lr1 = new LikeRecord(email, "1");
+        LikeRecord lr2 = new LikeRecord(email, "2");
+        list.add(lr1);
+        list.add(lr2);
+        when(likeRecordDAO.findAll(email)).thenReturn(list);
+        resource.deleteLikeRecord("1", email);
+        list.remove(lr1);
+        when(likeRecordDAO.findAll(email)).thenReturn(list);
+    }
+
+    @Test
+    public void getFollowingTestA() throws IOException {
+        String email = "april@gmail.com";
+        resource.addLikeRecord("1", email);
+        resource.addLikeRecord("2", email);
+        FollowingView view = resource.getFollowing(null, email);
+        assertEquals(null, view);
+    }
+
+    @Test
+    public void getFollowingTestB() throws IOException {
+        String email = "april@gmail.com";
+        String name = "April";
+        resource.addLikeRecord("1", email);
+        resource.addLikeRecord("2", email);
+        List<LikeRecord> list = new ArrayList<>();
+        LikeRecord lr1 = new LikeRecord(email, "1");
+        LikeRecord lr2 = new LikeRecord(email, "2");
+        list.add(lr1);
+        list.add(lr2);
+        FollowingView view = resource.getFollowing(name, email);
+        assertEquals(name, view.getUser().getName());
+        assertEquals(email, view.getUser().getEmail());
+    }
+
 }

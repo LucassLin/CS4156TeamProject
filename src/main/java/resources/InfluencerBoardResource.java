@@ -73,6 +73,9 @@ public class InfluencerBoardResource {
     @UnitOfWork
     @Path("/LikeRecord/deleteRecord/{email}/{channelId}")
     public void deleteLikeRecord(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+        if (channelId == null || email == null) {
+            return;
+        }
         System.out.println("record to be deleted: " + email + " -> " + channelId);
         int deleteStatus = likeRecordDAO.deleteRecord(email, channelId);
         System.out.println("#entry deleted: " + deleteStatus);
@@ -147,10 +150,14 @@ public class InfluencerBoardResource {
     @UnitOfWork
     @GET
     public FollowingView getFollowing(@PathParam("name") String name, @PathParam("email") String email) throws IOException {
+        if (name == null || email == null) {
+            return null;
+        }
         List<LikeRecord> records = likeRecordDAO.findAll(email);
+        System.out.println("number of records for following page: " + records.size());
         ArrayList<InfluencerProfile> followingChannels = new ArrayList<>();
         for (LikeRecord r : records) {
-            //System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
+            System.out.println("record is: " + r.getEmail() + " -> " + r.getChannelID());
             Search search = new Search(r.getChannelID());
             followingChannels.add(search.getInfluencerProfileByID());
         }
