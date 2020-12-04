@@ -1,5 +1,5 @@
 InfluencerBoardResourceTest.class
+LikeRecordResourceTest.class
 YoutubeAPITest.class
 GetChannelAnalyticsTaskTest.class
-UserProfileDAOTest.class
 InfluencerProfileTest.class

@@ -1,0 +1,11 @@
+branches:
+  only:
+    - master
+    - test
+    - /^release\/.*$/
+    - /^v[0-9].*$/
+language: java
+jdk:
+  - openjdk8
+script:
+  - mvn clean test

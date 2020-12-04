@@ -1,4 +1,3 @@
-tasks/Search$4.class
 models/UserProfile.class
 InfluencerBoardApplication.class
 InfluencerBoardConfiguration.class
@@ -7,13 +6,11 @@ InfluencerBoardApplication$3.class
 InfluencerBoardApplication$1.class
 db/LikeRecordDAO.class
 tasks/YoutubeAPI.class
-db/UserProfileDAO.class
 resources/InfluencerBoardResource.class
 views/UserHomeView.class
 tasks/Search$1.class
 views/LoginView.class
 views/UserInfluencerProfileView.class
-tasks/Search$3.class
 InfluencerBoardApplication$2.class
 models/UserInfluencerProfile.class
 models/InfluencerProfile.class
@@ -23,5 +20,4 @@ tasks/Search.class
 views/InfluencerProfileView.class
 models/LikeRecord.class
 tasks/GetChannelAnalyticsTask.class
-db/InfluencerProfileDAO.class
 tasks/Auth.class
