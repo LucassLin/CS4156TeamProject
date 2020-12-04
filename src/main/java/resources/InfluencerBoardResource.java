@@ -1,7 +1,6 @@
 package resources;
 
 import com.codahale.metrics.annotation.Timed;
-import db.InfluencerProfileDAO;
 import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -32,14 +31,13 @@ public class InfluencerBoardResource {
     private static int HOME_INFLUENCER_NUM = 11;
     @Inject
     private final UserProfileDAO userProfileDAO;
-    @Inject
-    private final InfluencerProfileDAO influencerProfileDAO;
+/*    @Inject
+    private final InfluencerProfileDAO influencerProfileDAO;*/
     @Inject
     private final LikeRecordDAO likeRecordDAO;
 
-    public InfluencerBoardResource(UserProfileDAO userProfileDAO, InfluencerProfileDAO influencerProfileDAO, LikeRecordDAO likeRecordDAO) {
+    public InfluencerBoardResource(UserProfileDAO userProfileDAO, LikeRecordDAO likeRecordDAO) {
         this.userProfileDAO = userProfileDAO;
-        this.influencerProfileDAO = influencerProfileDAO;
         this.likeRecordDAO = likeRecordDAO;
     }
 

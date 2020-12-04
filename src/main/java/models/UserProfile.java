@@ -92,10 +92,10 @@ public class UserProfile {
         this.email = email;
     }
 
-/*    public UserProfile() {
+    public UserProfile() {
     }
 
-    public String getUserId() {
+/*    public String getUserId() {
         return userId;
     }*/
 

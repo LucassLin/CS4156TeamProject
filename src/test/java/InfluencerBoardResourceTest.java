@@ -1,4 +1,3 @@
-import db.InfluencerProfileDAO;
 import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
@@ -36,13 +35,13 @@ public class InfluencerBoardResourceTest {
 
     @Mock
     private static UserProfileDAO userDAO;
-    @Mock
-    private static InfluencerProfileDAO influencerDAO;
+/*    @Mock
+    private static InfluencerProfileDAO influencerDAO;*/
     @Mock
     private static LikeRecordDAO likeRecordDAO;
 
     public static final ResourceExtension RULE = ResourceExtension.builder()
-            .addResource(new InfluencerBoardResource(userDAO, influencerDAO, likeRecordDAO))
+            .addResource(new InfluencerBoardResource(userDAO, likeRecordDAO))
             .build();
 
     @InjectMocks
@@ -55,13 +54,12 @@ public class InfluencerBoardResourceTest {
 
     @BeforeEach
     public void renew() {
-        resource = new InfluencerBoardResource(userDAO, influencerDAO, likeRecordDAO);
+        resource = new InfluencerBoardResource(userDAO, likeRecordDAO);
     }
 
     @AfterEach
     public void tearDown() {
         reset(userDAO);
-        reset(influencerDAO);
         reset(likeRecordDAO);
     }
 
@@ -180,6 +178,7 @@ public class InfluencerBoardResourceTest {
         assertEquals(curInfluencer.getAveragePostViews(), "2300");
         assertEquals(curInfluencer.getNumOfSubscribers(), "22700000");
         assertEquals(curInfluencer.getCountryCode(), "KR");
+        assertEquals(curInfluencer.getTags().size(), 1);
         assertEquals(links.get(0), "https://www.youtube.com/embed/SoXGx7FakyU");
         assertEquals(links.get(1), "https://www.youtube.com/embed/Vaz_kpmTi0M");
         assertEquals(links.get(2), "https://www.youtube.com/embed/OC6AFSZLtnk");
