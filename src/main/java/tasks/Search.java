@@ -30,7 +30,7 @@ public class Search {
      * to make YouTube Data API requests.
      */
     private YouTube youtube;
-    private final String apiKey = "AIzaSyD96QUx6cXNaedKYZCtTi87o3UsyHjcg48";
+    private final String apiKey = "AIzaSyD7owdufuUoQK-zUU7adt8EkEfig9o8RGo";
 
     private final String channelID;
     
@@ -58,8 +58,7 @@ public class Search {
             InfluencerProfile influencerProfile;
             ArrayList<String> tags = new ArrayList<>();
             if(response.getPageInfo().getTotalResults() == 0){
-                ArrayList<String> dummyTags = new ArrayList<>();
-                dummyTags.get(0);
+                throw new IOException("No Such Channel ID");
             }
             Channel item = response.getItems().get(0);
             ChannelSnippet snippet = item.getSnippet();
