@@ -75,7 +75,6 @@ public class Search {
             return influencerProfile;
 
         } catch (Throwable t) {
-            t.printStackTrace();
             ArrayList<String> dummyTags = new ArrayList<>();
             InfluencerProfile dummy = new InfluencerProfile("N/A", "N/A", "N/A", "N/A", "N/A", "N/A", dummyTags, "N/A");
             return dummy;
