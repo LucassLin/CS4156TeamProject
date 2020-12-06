@@ -176,7 +176,7 @@ public class InfluencerBoardResourceTest {
         assertEquals(curInfluencer.getPhotoLink(), "https://yt3.ggpht.com/ytc/AAUvwnh1e9ZrKP58etpfsjLmktO74CwuMQgYrNNf-ERvTg=s800-c-k-c0x00ffffff-no-rj");
         assertEquals(curInfluencer.getChannelId(), "UCw8ZhLPdQ0u_Y-TLKd61hGA");
         assertEquals(curInfluencer.getAveragePostViews(), "2306");
-        assertEquals(curInfluencer.getNumOfSubscribers(), "22700000");
+        assertEquals(curInfluencer.getNumOfSubscribers(), "22800000");
         assertEquals(curInfluencer.getCountryCode(), "KR");
         assertEquals(curInfluencer.getTags().size(), 1);
         assertEquals(links.get(0), "https://www.youtube.com/embed/SoXGx7FakyU");
