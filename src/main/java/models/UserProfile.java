@@ -4,7 +4,9 @@ import tasks.Search;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "UserProfile")
@@ -142,6 +144,57 @@ public class UserProfile {
             followingChannelsList.add(curInfluencer);
         }
         return followingChannelsList;
+    }
+
+    public int getFollowingChannelsCount() {
+        String str[] = followingChannels.split(",");
+        ArrayList<InfluencerProfile> followingChannelsList = new ArrayList<>();
+        Search search;
+        InfluencerProfile curInfluencer;
+        for (String s: str) {
+            search = new Search(s);
+            curInfluencer = search.getInfluencerProfileByID();
+            followingChannelsList.add(curInfluencer);
+        }
+        return followingChannelsList.size();
+    }
+
+    public ArrayList<String> getUserInterests() {
+        String str[] = followingChannels.split(",");
+        ArrayList<InfluencerProfile> followingChannelsList = new ArrayList<>();
+        Search search;
+        InfluencerProfile curInfluencer;
+        for (String s: str) {
+            search = new Search(s);
+            curInfluencer = search.getInfluencerProfileByID();
+            followingChannelsList.add(curInfluencer);
+        }
+        ArrayList<String> interests = new ArrayList<>();
+        for (InfluencerProfile influencerProfile : followingChannelsList) {
+            ArrayList<String> tags = influencerProfile.getTags();
+            interests.addAll(tags);
+            System.out.println(influencerProfile.tags);
+        }
+        return interests;
+    }
+
+    public int getUserInterestsCount() {
+        String str[] = followingChannels.split(",");
+        ArrayList<InfluencerProfile> followingChannelsList = new ArrayList<>();
+        Search search;
+        InfluencerProfile curInfluencer;
+        for (String s: str) {
+            search = new Search(s);
+            curInfluencer = search.getInfluencerProfileByID();
+            followingChannelsList.add(curInfluencer);
+        }
+        ArrayList<String> interests = new ArrayList<>();
+        for (InfluencerProfile influencerProfile : followingChannelsList) {
+            ArrayList<String> tags = influencerProfile.getTags();
+            interests.addAll(tags);
+        }
+        Set<String> interestsSet = new HashSet<>(interests);
+        return interestsSet.size();
     }
 
 /*    public String getImageUrl() {

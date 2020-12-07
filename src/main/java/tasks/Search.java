@@ -30,7 +30,7 @@ public class Search {
      * to make YouTube Data API requests.
      */
     private YouTube youtube;
-    private final String apiKey = "";
+    private final String apiKey = "AIzaSyD96QUx6cXNaedKYZCtTi87o3UsyHjcg48";
 
     private final String channelID;
     

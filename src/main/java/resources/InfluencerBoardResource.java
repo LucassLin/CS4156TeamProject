@@ -77,7 +77,7 @@ public class InfluencerBoardResource {
             System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
         }
         // get recommendations for the current user
-        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/xuejing/Desktop/Fall 2020/cloud computing/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask("/Users/jiaqi/Desktop/CS4156TeamProject/src/main/resources/data/channelAnalytics.csv");
         ArrayList<InfluencerProfile> pool = task.getInfluencers(300);
         Collections.shuffle(pool);
         ArrayList<InfluencerProfile> influencers = new ArrayList<>();
