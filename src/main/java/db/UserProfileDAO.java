@@ -30,4 +30,21 @@ public class UserProfileDAO extends AbstractDAO<UserProfile> {
         return list((Query<UserProfile>) namedQuery("getAllUsers"));
     }
 
+    public List<UserProfile> getUserProfile(String email) {
+        return list((Query<UserProfile>) namedQuery("getUserProfile")
+                .setParameter("userEmail", email));
+    }
+
+    public int deleteUserProfile(String email) {
+        Query query = namedQuery("deleteUserProfile").
+                setParameter("userEmail", email);
+        return query.executeUpdate();
+    }
+
+    public int updateUserProfile(String email, String newInterests) {
+        Query query = namedQuery("updateUserProfile")
+                .setParameter("userEmail", email)
+                .setParameter("interestsString", newInterests);
+        return query.executeUpdate();
+    }
 }

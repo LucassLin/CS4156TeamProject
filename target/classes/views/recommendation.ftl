@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="views.UserHomeView" -->
+<#-- @ftlvariable name="" type="views.RecommendationView" -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -173,25 +173,6 @@
 </head>
 
 <body translate="no">
-
-<#--<h1 class="welcome">Welcome ${userProfile.name}!</h1>
-<#assign followingLink = "${userProfile.email}/profile">
-<a href=${followingLink} class="info">My Profile</a>-->
-<figure class="snip1336">
-    <figcaption>
-        <h2>Welcome ${userProfile.name}! <span>${userProfile.followingChannels?size} subscriptions</span></h2>
-        <p>
-            <#list userProfile.interests as interest>
-                ${interest}
-                <br>
-            </#list>
-        </p>
-        <#assign link = "${userProfile.email}/profile">
-        <a href=${link} class="info">My Profile</a>
-        <#assign link = "${userProfile.email}/recommendation">
-        <a href=${link} class="info">Recommendation</a>
-    </figcaption>
-</figure>
 <#list influencers as influencer>
     <figure class="snip1336">
         <img src=${influencer.photoLink} alt="sample87"/>
@@ -211,17 +192,12 @@
                            onclick="changeStatus(this.id)">
                 </form>
             <#else>
-                <#assign tagsString = ''>
-                <#list influencer.tags as tag>
-                    <#assign tagsString += tag>
-                    <#assign tagsString += ",">
-                </#list>
-                <form method="post" action="/LikeRecord/addRecord/${userProfile.email}/${influencer.channelId}/${tagsString}">
+                <form method="post" action="/LikeRecord/addRecord/${userProfile.email}/${influencer.channelId}">
                     <input id="follow${influencer.channelId}" type="submit" value="Follow"
                            onclick="changeStatus(this.id)">
                 </form>
             </#if>
-            <#assign link = "${userProfile.email}/${influencer.channelId}">
+            <#assign link = "${influencer.channelId}">
             <a href=${link} class="info">More Info</a>
         </figcaption>
     </figure>

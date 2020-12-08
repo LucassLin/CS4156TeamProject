@@ -13,11 +13,23 @@ import java.util.Arrays;
                 @NamedQuery(
                         name = "getAllUsers",
                         query = "SELECT l FROM UserProfile l"
-                )
+                ),
 /*                @NamedQuery(
                         name = "updateUser",
                         query = "UPDATE UserProfile"
                 )*/
+                @NamedQuery(
+                        name = "getUserProfile",
+                        query = "SELECT l FROM UserProfile l where l.email =:userEmail"
+                ),
+                @NamedQuery(
+                        name = "deleteUserProfile",
+                        query = "DELETE FROM UserProfile l WHERE l.email =:userEmail"
+                ),
+                @NamedQuery(
+                        name = "updateUserProfile",
+                        query = "UPDATE UserProfile SET interests =:interestsString WHERE email =:userEmail"
+                )
         })
 
 public class UserProfile {
@@ -78,6 +90,7 @@ public class UserProfile {
             sb1.append(s);
             sb1.append(",");
         }
+        sb1.append("travel");
         this.interests = sb1.toString();
         StringBuffer sb2 = new StringBuffer();
         for (InfluencerProfile i : followingChannels) {
@@ -95,9 +108,9 @@ public class UserProfile {
     public UserProfile() {
     }
 
-/*    public String getUserId() {
+    public String getUserId() {
         return userId;
-    }*/
+    }
 
     public String getName() {
         return name;
@@ -107,7 +120,7 @@ public class UserProfile {
         return email;
     }
 
-/*    public String getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -121,7 +134,8 @@ public class UserProfile {
 
     public String getCountry() {
         return country;
-    }*/
+    }
+
 
     public ArrayList<String> getInterests() {
         String str[] = interests.split(",");

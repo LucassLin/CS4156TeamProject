@@ -188,6 +188,8 @@
         </p>
         <#assign link = "${userProfile.email}/profile">
         <a href=${link} class="info">My Profile</a>
+        <#assign link = "${userProfile.email}/recommendation">
+        <a href=${link} class="info">Recommendation</a>
     </figcaption>
 </figure>
 <#list influencers as influencer>
@@ -209,7 +211,12 @@
                            onclick="changeStatus(this.id)">
                 </form>
             <#else>
-                <form method="post" action="/LikeRecord/addRecord/${userProfile.email}/${influencer.channelId}">
+                <#assign tagsString = ''>
+                <#list influencer.tags as tag>
+                    <#assign tagsString += tag>
+                    <#assign tagsString += ",">
+                </#list>
+                <form method="post" action="/LikeRecord/addRecord/${userProfile.email}/${influencer.channelId}/${tagsString}">
                     <input id="follow${influencer.channelId}" type="submit" value="Follow"
                            onclick="changeStatus(this.id)">
                 </form>

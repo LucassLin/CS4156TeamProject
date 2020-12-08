@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <!--    <changeSet id="1" author="codahale">
+        <changeSet id="1" author="codahale">
             <createTable tableName="LikeRecord">
                 <column name="id" type="bigint" autoIncrement="true">
                     <constraints primaryKey="true" nullable="false"/>
@@ -19,8 +19,8 @@
                 </column>
             </createTable>
             <addUniqueConstraint tableName="LikeRecord" columnNames="email, channelID"/>
-        </changeSet>-->
-   <!-- <changeSet id="4" author="xuejing">
+        </changeSet>
+    <changeSet id="4" author="xuejing">
         <createTable tableName="UserProfile">
             <column name="userId" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -49,56 +49,12 @@
         </createTable>
         <addUniqueConstraint tableName="UserProfile"
                              columnNames="userId, email, gender, age, country, interests, followingChannels, name"/>
-    </changeSet>-->
-    <!--    <changeSet id="3" author="xuejing">
-            <delete tableName="UserProfile"></delete>
-        </changeSet>-->
-<!--    <changeSet id="5" author="xuejing">
-        <addColumn tableName="UserProfile">
-            <column name="name" type="varchar(256)">
-                <constraints nullable="false"></constraints>
-            </column>
-        </addColumn>
-    </changeSet>-->
-<!--    <changeSet id="6" author="xuejing">
+    </changeSet>
+    <changeSet id="6" author="xuejing">
         <addColumn tableName="UserProfile">
             <column name="phone" type="varchar(256)">
                 <constraints nullable="true"></constraints>
             </column>
         </addColumn>
-    </changeSet>-->
-    <changeSet id="7" author="xuejing">
-        <createTable tableName="InfluencerProfile">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="channelId" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="channelName" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="type" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="countryCode" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="numOfSubscribers" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="averagePostViews" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="tags" type="varchar(265535)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="photoLink" type="varchar(255)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="description" type="varchar(265535)">
-                <constraints nullable="false"></constraints>
-            </column>
-        </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -218,4 +218,61 @@ public class Search {
         ArrayList<String> empty = new ArrayList<>();
         return empty;
     }
+
+    public ArrayList<String> getRecommendedChannelID(ArrayList<String> interests) {
+        // Read the developer key from the properties file.
+        try {
+            // This objecjat is used to make YouTube Data API requests. The last
+            // argument is required, but since we don't need anything
+            // initialized when the HttpRequest is initialized, we override
+            // the interface and provide a no-op function.
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
+                public void initialize(HttpRequest request) throws IOException {
+                }
+            }).setApplicationName("youtube-cmdline-search-sample").build();
+            String interestString = "";
+            Collections.shuffle(interests);
+            ArrayList<String> checkDuplicate = new ArrayList<>();
+            for(int i=0; i<interests.size() && i<7; ++i){
+                boolean skip = false;
+                for(int j=0; j<interests.get(i).length(); ++j){
+                    char c = interests.get(i).charAt(j);
+                    if(!Character.isAlphabetic(c)){
+                        skip = true;
+                        break;
+                    }
+                }
+                if(skip || checkDuplicate.contains(interests.get(i))) continue;
+                interestString += interests.get(i);
+                //if(i == interests.size()-1 || i == 2) break;
+                interestString += "|";
+                checkDuplicate.add(interests.get(i));
+            }
+            System.out.println("youtube search string is " + interestString);
+            ArrayList<String> channels = new ArrayList<>();
+
+            YouTube.Search.List request = youtube.search()
+                    .list("snippet");
+            request.setKey(apiKey);
+            SearchListResponse response = request.setMaxResults(1000L)
+                    .setOrder("viewCount")
+                    .setType("channel")
+                    .setQ(interestString)
+                    .execute();
+            List<SearchResult> items = response.getItems();
+            Collections.shuffle(items);
+            for(int i=0; i<8 && i<items.size(); ++i){
+                channels.add(items.get(i).getId().getChannelId());
+            }
+            return channels;
+
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        ArrayList<String> empty = new ArrayList<>();
+        return empty;
+    }
 }
