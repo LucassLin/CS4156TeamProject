@@ -1,3 +1,4 @@
+import db.CommentRecordDAO;
 import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.Application;
@@ -7,6 +8,7 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import models.CommentRecord;
 import models.LikeRecord;
 import models.UserProfile;
 import resources.InfluencerBoardResource;
@@ -20,7 +22,7 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
     }
 
     private final HibernateBundle<InfluencerBoardConfiguration> hibernateBundle =
-            new HibernateBundle<InfluencerBoardConfiguration>(LikeRecord.class, UserProfile.class) {
+            new HibernateBundle<InfluencerBoardConfiguration>(LikeRecord.class, UserProfile.class, CommentRecord.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(InfluencerBoardConfiguration configuration) {
                     return configuration.getDataSourceFactory();
@@ -51,6 +53,7 @@ public class InfluencerBoardApplication extends Application<InfluencerBoardConfi
     public void run(InfluencerBoardConfiguration configuration, Environment environment) {
         final LikeRecordDAO likeRecordDAO = new LikeRecordDAO(hibernateBundle.getSessionFactory());
         final UserProfileDAO userProfileDAO = new UserProfileDAO(hibernateBundle.getSessionFactory());
-        environment.jersey().register(new InfluencerBoardResource(userProfileDAO, likeRecordDAO));
+        final CommentRecordDAO commentRecordDAO = new CommentRecordDAO(hibernateBundle.getSessionFactory());
+        environment.jersey().register(new InfluencerBoardResource(userProfileDAO, likeRecordDAO, commentRecordDAO));
     }
 }

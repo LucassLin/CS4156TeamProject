@@ -6,20 +6,20 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-        <changeSet id="1" author="codahale">
-            <createTable tableName="LikeRecord">
-                <column name="id" type="bigint" autoIncrement="true">
-                    <constraints primaryKey="true" nullable="false"/>
-                </column>
-                <column name="email" type="varchar(255)">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="channelID" type="varchar(255)">
-                    <constraints nullable="false"/>
-                </column>
-            </createTable>
-            <addUniqueConstraint tableName="LikeRecord" columnNames="email, channelID"/>
-        </changeSet>
+    <!--<changeSet id="1" author="codahale">
+        <createTable tableName="LikeRecord">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="channelID" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="LikeRecord" columnNames="email, channelID"/>
+    </changeSet>
     <changeSet id="4" author="xuejing">
         <createTable tableName="UserProfile">
             <column name="userId" type="bigint" autoIncrement="true">
@@ -56,5 +56,21 @@
                 <constraints nullable="true"></constraints>
             </column>
         </addColumn>
+    </changeSet>-->
+    <changeSet id="10" author="xuejing">
+        <createTable tableName="CommentRecord">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="channelId" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="varchar(265535)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

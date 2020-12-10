@@ -1,9 +1,11 @@
 package resources;
 
 import com.codahale.metrics.annotation.Timed;
+import db.CommentRecordDAO;
 import db.LikeRecordDAO;
 import db.UserProfileDAO;
 import io.dropwizard.hibernate.UnitOfWork;
+import models.CommentRecord;
 import models.InfluencerProfile;
 import models.LikeRecord;
 import models.UserProfile;
@@ -12,10 +14,7 @@ import tasks.Search;
 import views.*;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -33,9 +32,13 @@ public class InfluencerBoardResource {
     @Inject
     private final LikeRecordDAO likeRecordDAO;
 
-    public InfluencerBoardResource(UserProfileDAO userProfileDAO, LikeRecordDAO likeRecordDAO) {
+    @Inject
+    private final CommentRecordDAO commentRecordDAO;
+
+    public InfluencerBoardResource(UserProfileDAO userProfileDAO, LikeRecordDAO likeRecordDAO, CommentRecordDAO commentRecordDAO) {
         this.userProfileDAO = userProfileDAO;
         this.likeRecordDAO = likeRecordDAO;
+        this.commentRecordDAO = commentRecordDAO;
     }
 
     public List<LikeRecord> findLikeRecordByEmail(String email) {
@@ -185,7 +188,8 @@ public class InfluencerBoardResource {
 
     @Path("/home/{name}/{email}/{channelId}")
     @GET
-    public InfluencerProfileView getInfluencerForUser(@PathParam("channelId") String channelId)
+    @UnitOfWork
+    public InfluencerProfileView getInfluencerForUser(@PathParam("email") String email, @PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException {
         Search search = new Search(channelId);
         ArrayList<String> links = search.getPopularVideoList();
@@ -196,7 +200,21 @@ public class InfluencerBoardResource {
             //System.out.println("link is " + threeLinks.get(i));
         }
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
-        return new InfluencerProfileView(curInfluencer, threeLinks);
+        List<CommentRecord> comments = commentRecordDAO.getComments(channelId);
+        for (CommentRecord r : comments) {
+            System.out.println(r.getComment() + " commented on " + r.getChannelId() + ": " + r.getComment() );
+        }
+        return new InfluencerProfileView(email, curInfluencer, threeLinks, comments);
+    }
+
+    @Path("/CommentRecord/addRecord/{email}/{channelId}/")
+    @POST
+    @UnitOfWork
+    public InfluencerProfileView addComment(@PathParam("email") String email, @PathParam("channelId") String channelId, @FormParam("comment") String comment) throws GeneralSecurityException, IOException {
+        System.out.println("------------form parameter passed in:------------");
+        System.out.println(comment);
+        commentRecordDAO.create(new CommentRecord(email, channelId, comment));
+        return getInfluencerForUser(email, channelId);
     }
 
     @Path("/home/{name}/{email}/recommendation")
