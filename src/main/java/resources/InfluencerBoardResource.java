@@ -9,10 +9,7 @@ import models.LikeRecord;
 import models.UserProfile;
 import tasks.GetChannelAnalyticsTask;
 import tasks.Search;
-import views.FollowingView;
-import views.InfluencerProfileView;
-import views.LoginView;
-import views.UserHomeView;
+import views.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -47,8 +44,10 @@ public class InfluencerBoardResource {
 
     @POST
     @UnitOfWork
-    @Path("/LikeRecord/addRecord/{email}/{channelId}")
-    public void addLikeRecord(@PathParam("channelId") String channelId, @PathParam("email") String email) {
+    @Path("/LikeRecord/addRecord/{email}/{channelId}/{tagsString}")
+    public void addLikeRecord(@PathParam("channelId") String channelId, @PathParam("email") String email
+    , @PathParam("tagsString") String newTags) {
+        System.out.println("new tags are " + newTags);
         if (channelId == null || email == null) {
             return;
         }
@@ -64,6 +63,18 @@ public class InfluencerBoardResource {
         if (!duplicate) {
             likeRecordDAO.create(record);
             System.out.println("new like recorded added");
+            UserProfile profile = userProfileDAO.getUserProfile(email).get(0);
+            String newInterests = newTags;
+            for (String s: profile.getInterests()) {
+                newInterests += s + ",";
+            }
+            System.out.println("newInterests is " + newInterests);
+            int updateStatus = userProfileDAO.updateUserProfile(email, newInterests);
+            System.out.println("update Status is " + updateStatus);
+            List<UserProfile> userProfileList = userProfileDAO.getUserProfile(email);
+            for(String s : userProfileList.get(0).getInterests()){
+                System.out.println("interest is " +s);
+            }
         }
     }
 
@@ -109,10 +120,10 @@ public class InfluencerBoardResource {
         }
         System.out.println("Does the user already exist? " + existed);
         // if new user, add to our database
-        if (!existed) {
-            userProfileDAO.createUser(user);
-            System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
-        }
+//        if (!existed) {
+//            userProfileDAO.createUser(user);
+//            System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
+//        }
         // get recommendations for the current user
         String projDir = System.getProperty("user.dir");
         GetChannelAnalyticsTask task = new GetChannelAnalyticsTask(projDir+"/channelAnalytics.csv");
@@ -136,8 +147,13 @@ public class InfluencerBoardResource {
         }
         interests.add("music");
         interests.add("movie");
+        interests.add("nba");
+        interests.add("cba");
         user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
-
+        if (!existed) {
+            userProfileDAO.createUser(user);
+            System.out.println("new user added to db: " + user.getName() + ", " + user.getEmail());
+        }
         return new UserHomeView(user, influencers);
     }
 
@@ -160,6 +176,8 @@ public class InfluencerBoardResource {
         ArrayList<String> interests = new ArrayList<>();
         interests.add("music");
         interests.add("movie");
+        interests.add("nba");
+        interests.add("cba");
         UserProfile user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
         return new FollowingView(user);
     }
@@ -179,6 +197,42 @@ public class InfluencerBoardResource {
         }
         InfluencerProfile curInfluencer = search.getInfluencerProfileByID();
         return new InfluencerProfileView(curInfluencer, threeLinks);
+    }
+
+    @Path("/home/{name}/{email}/recommendation")
+    @GET
+    @Timed
+    @UnitOfWork
+    public RecommendationView getRecommendationForUser(@PathParam("name") String name, @PathParam("email") String email)
+            throws GeneralSecurityException, IOException {
+        Search search = new Search("");
+        ArrayList<String> interests = new ArrayList<>();
+        List<UserProfile> userProfileList = userProfileDAO.getUserProfile(email);
+        if(userProfileList.size() == 1){
+            UserProfile curUser = userProfileList.get(0);
+            ArrayList<String> curInterests = curUser.getInterests();
+            for(String interest : curInterests){
+                System.out.println("My interest is " + interest);
+                interests.add(interest);
+            }
+            System.out.println("user name is " + curUser.getName());
+            System.out.println("user email is " + curUser.getEmail());
+        }
+
+        ArrayList<String> channels = search.getRecommendedChannelID(interests);
+        ArrayList<InfluencerProfile> influencerProfiles = new ArrayList<>();
+        for(String channel : channels){
+            System.out.println("recommendation is " + channel);
+            Search searchProfile = new Search(channel);
+            influencerProfiles.add(searchProfile.getInfluencerProfileByID());
+        }
+        UserProfile user = new UserProfile(name, email);
+        ArrayList<String> followingChannelsID = new ArrayList<>();
+        List<LikeRecord> records = likeRecordDAO.findAll(email);
+        for(LikeRecord record : records){
+            followingChannelsID.add(record.getChannelID());
+        }
+        return new RecommendationView(influencerProfiles, user, followingChannelsID);
     }
 
 }

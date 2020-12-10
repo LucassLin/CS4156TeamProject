@@ -27,5 +27,12 @@ public class GetChannelAnalyticsTaskTest {
         assertEquals(influencers.size(), 0);
     }
 
+    @Test
+    public void getInfluencersTestC() throws IOException {
+        String projDir = System.getProperty("user.dir");
+        GetChannelAnalyticsTask task = new GetChannelAnalyticsTask(projDir+"/channelAnalytics.csv");
+        ArrayList<InfluencerProfile> influencers = task.getInfluencers(0);
+        assertEquals(influencers.size(), 0);
+    }
 
 }

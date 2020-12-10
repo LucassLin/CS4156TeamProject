@@ -1,7 +1,5 @@
 branches:
   only:
-    - master
-    - test
     - main
     - /^release\/.*$/
     - /^v[0-9].*$/
