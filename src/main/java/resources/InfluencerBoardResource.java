@@ -148,10 +148,10 @@ public class InfluencerBoardResource {
                 followingChannels.add(search.getInfluencerProfileByID());
             }
         }
-        interests.add("music");
+/*        interests.add("music");
         interests.add("movie");
         interests.add("nba");
-        interests.add("cba");
+        interests.add("cba");*/
         user = new UserProfile("01", name, email, "0000000000", "female", 19, "China", interests, followingChannels);
         if (!existed) {
             userProfileDAO.createUser(user);
@@ -189,7 +189,7 @@ public class InfluencerBoardResource {
     @Path("/home/{name}/{email}/{channelId}")
     @GET
     @UnitOfWork
-    public InfluencerProfileView getInfluencerForUser(@PathParam("email") String email, @PathParam("channelId") String channelId)
+    public InfluencerProfileView getInfluencerForUser(@PathParam("name") String name, @PathParam("email") String email, @PathParam("channelId") String channelId)
             throws GeneralSecurityException, IOException {
         Search search = new Search(channelId);
         ArrayList<String> links = search.getPopularVideoList();
@@ -204,17 +204,17 @@ public class InfluencerBoardResource {
         for (CommentRecord r : comments) {
             System.out.println(r.getComment() + " commented on " + r.getChannelId() + ": " + r.getComment() );
         }
-        return new InfluencerProfileView(email, curInfluencer, threeLinks, comments);
+        return new InfluencerProfileView(name, email, curInfluencer, threeLinks, comments);
     }
 
-    @Path("/CommentRecord/addRecord/{email}/{channelId}/")
+    @Path("/CommentRecord/addRecord/{name}/{email}/{channelId}/")
     @POST
     @UnitOfWork
-    public InfluencerProfileView addComment(@PathParam("email") String email, @PathParam("channelId") String channelId, @FormParam("comment") String comment) throws GeneralSecurityException, IOException {
+    public InfluencerProfileView addComment(@PathParam("name") String name, @PathParam("email") String email, @PathParam("channelId") String channelId, @FormParam("comment") String comment) throws GeneralSecurityException, IOException {
         System.out.println("------------form parameter passed in:------------");
         System.out.println(comment);
         commentRecordDAO.create(new CommentRecord(email, channelId, comment));
-        return getInfluencerForUser(email, channelId);
+        return getInfluencerForUser(name, email, channelId);
     }
 
     @Path("/home/{name}/{email}/recommendation")

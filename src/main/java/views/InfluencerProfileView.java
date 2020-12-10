@@ -13,6 +13,7 @@ public class InfluencerProfileView extends View {
     private final ArrayList<String> videoLinks;
     private final List<CommentRecord> comments;
     private final String email;
+    private final String name;
 
     /**
      * Constructor.
@@ -22,12 +23,13 @@ public class InfluencerProfileView extends View {
      * @param videoLinks
      * links of the video
      */
-    public InfluencerProfileView(String email, InfluencerProfile influencerProfile, ArrayList<String> videoLinks, List<CommentRecord> comments) {
+    public InfluencerProfileView(String name, String email, InfluencerProfile influencerProfile, ArrayList<String> videoLinks, List<CommentRecord> comments) {
         super("influencer_profile.ftl");
         this.influencerProfile = influencerProfile;
         this.videoLinks = videoLinks;
         this.comments = comments;
         this.email = email;
+        this.name = name;
     }
 
     public InfluencerProfile getInfluencerProfile() {
@@ -43,4 +45,6 @@ public class InfluencerProfileView extends View {
     public String getEmail() {
         return email;
     }
+
+    public String getName() { return name; }
 }

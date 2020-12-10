@@ -883,7 +883,7 @@ Enjoy the code <3
     <div class="comment-main-level">
         <div class="comment-box">
             <div class="clearfix">
-                <form id="comment-content" method="post" action="/CommentRecord/addRecord/${email}/${influencerProfile.channelId}">
+                <form id="comment-content" method="post" action="/CommentRecord/addRecord/${name}/${email}/${influencerProfile.channelId}">
                     <input type="text" id="comment-input" class="comment-input" name="comment" value="Enter your comment here">
                     <input class="comment-btn" type="submit" value="Send data">
                 </form>
@@ -891,6 +891,7 @@ Enjoy the code <3
         </div>
     </div>
 </div>
+<a href="/home/${name}/${email}">Back to Home Page</a>
 <p align="center">
 <#list videoLinks as videolink>
     <iframe width="460" height="315" src=${videolink}>
